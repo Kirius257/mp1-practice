@@ -176,7 +176,7 @@ int main() {
 					n_less = random_function(1, new_n);
 					new_n = n_less;
 				}
-				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts\n: %d", i); break; }
+				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
 			}
 			break;
 		}
