@@ -17,7 +17,7 @@ int random_function(int start, int end)
 	
 }
 int main() {
-	int guess, n, c_diff, choice;
+	int guess, n, c_diff, choice,i=0;
 	n = random_function(1, 1000);
 	printf("Select game mode:\n");
 	printf("1. Guessing me\n");
@@ -42,12 +42,13 @@ int main() {
 		{
 			int n1 = 225;
 			printf("Let`s start the game!Try to win!\n");
-			for (int i = 0; i <= n1; i++) {
+			for (i; i < n1;) {
+				i++;
 				scanf("%d", &guess);
 				if (guess > 1000 || guess < 1) { printf("Error!Incorrect data"); return 1; }
 				if (guess == n) {
 					printf("You guessed it!\n");
-					printf("Used attempts: %d", i);
+					printf("Used attempts: %d\n", i);
 					return 0;
 				}
 				else if (guess != n && guess > n) {
@@ -55,18 +56,20 @@ int main() {
 				}
 				else printf("Assumption is smaller than the puzzle\n");
 			}
+			{printf("You didn`t riddled!\n"); printf("Used attempts: %d\n", i); }
 			break;
 		}
 		case 2:
 		{
 			int n2 = 115;
 			printf("Let`s start the game!Try to win!\n");
-			for (int i = 0; i <= n2; i++) {
+			for (i; i < n2;) {
+				i++;
 				scanf_s("%d", &guess);
 				if (guess > 1000 || guess < 1) { printf("Error!Incorrect data"); return 1; }
 				if (guess == n) {
 					printf("You guessed it!\n");
-					printf("Used attempts: %d", i);
+					printf("Used attempts: %d\n", i);
 					return 0;
 				}
 				else if (guess != n && guess > n) {
@@ -74,18 +77,20 @@ int main() {
 				}
 				else printf("Assumption is smaller than the puzzle\n");
 			}
+			{printf("You didn`t riddled!\n"); printf("Used attempts: %d\n", i); }
 			break;
 		}
 		case 3:
 		{
 			int n3 = 5;
 			printf("Let`s start the game!Try to win!\n");
-			for (int i = 0; i <= n3; i++) {
+			for (i; i < n3;) {
+				i++;
 				scanf("%d", &guess);
 				if (guess > 1000 || guess < 1) { printf("Error!Incorrect data"); return 1; }
 				if (guess == n) {
 					printf("You guessed it!\n");
-					printf("Used attempts: %d", i);
+					printf("Used attempts: %d\n", i);
 					return 0;
 				}
 				else if (guess > n) {
@@ -93,6 +98,7 @@ int main() {
 				}
 				else printf("Assumption is smaller than the puzzle\n");
 			}
+			{printf("You didn`t riddled!\n"); printf("Used attempts: %d\n", i);}
 			break;
 		}
 		}
@@ -100,10 +106,17 @@ int main() {
 	break;
 	case 2:
 	{
-		int i = 0, n4 = 225, n5 = 115, n6 = 5, n_more,n_less, choice_n,new_n;
+		int i = 0, n4 = 225, n5 = 115, n6 = 5,choice_n, new_n, up=1000, down= 1,user_number;
 		char my_answer;
 		new_n = random_function(1, 1000);
 		choice_n = random_function(1, 3);
+		printf("Riddle your number 1-1000: \n");
+		scanf("%d", &user_number);
+		printf("\n");
+		if (user_number > 1000 || user_number < 1) {
+			printf("Incorrect data!\n");
+			return 1;
+		}
 		printf("Select difficulty game mode:\n");
 		printf("1.  Easy: two hundred twenty five attempts\n");
 		printf("2. Medium: one hundred fifteen attempts\n");
@@ -119,18 +132,16 @@ int main() {
 				printf("Maybe you riddled the number %d?\n", new_n);
 				scanf("%c", &my_answer);
 				my_answer = getchar();
-				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!"); return 1; }
+				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					printf("Assumption is bigger than the puzzle\n");
-					n_more = random_function(new_n, 1000);
-					new_n = n_more;
+					down = new_n;
+					new_n = random_function(new_n, up);
 				}
 				else if (my_answer == '<') {
-					printf("Assumption is smaller than the puzzle\n");
-					n_less= random_function(1, new_n);
-					new_n = n_less;
+					up = new_n;
+					new_n = random_function(down, new_n);
 				}
-				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts\n: %d", i); break; }
+				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
 			}
 			break;
 		}
@@ -142,18 +153,16 @@ int main() {
 				printf("Maybe you riddled the number %d?\n", new_n);
 				scanf("%c", &my_answer);
 				my_answer = getchar();
-				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!"); return 1; }
+				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					printf("Assumption is bigger than the puzzle\n");
-					n_more = random_function(new_n, 1000);
-					new_n = n_more;
+					down = new_n;
+					new_n = random_function(new_n, up);
 				}
-				else if (my_answer == '<') {
-					printf("Assumption is smaller than the puzzle\n");
-					n_less = random_function(1, new_n);
-					new_n = n_less;
+				else if(my_answer == '<'){
+					up = new_n;
+					new_n = random_function(down, new_n);
 				}
-				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts\n: %d", i); break; }
+				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
 			}
 			break;
 		}
@@ -165,16 +174,14 @@ int main() {
 				printf("Maybe you riddled the number %d?\n", new_n);
 				scanf("%c", &my_answer);
 				my_answer = getchar();
-				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!"); return 1; }
+				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					printf("Assumption is bigger than the puzzle\n");
-					n_more = random_function(new_n, 1000);
-					new_n = n_more;
+					down = new_n;
+					new_n = random_function(new_n, up);
 				}
 				else if (my_answer == '<') {
-					printf("Assumption is smaller than the puzzle\n");
-					n_less = random_function(1, new_n);
-					new_n = n_less;
+					up = new_n;
+					new_n = random_function(down, new_n);
 				}
 				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
 			}
