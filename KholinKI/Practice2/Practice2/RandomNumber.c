@@ -134,11 +134,11 @@ int main() {
 				my_answer = getchar();
 				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					down = new_n;
+					down = new_n+1;
 					new_n = random_function(new_n, up);
 				}
 				else if (my_answer == '<') {
-					up = new_n;
+					up = new_n-1;
 					new_n = random_function(down, new_n);
 				}
 				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
@@ -155,11 +155,11 @@ int main() {
 				my_answer = getchar();
 				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					down = new_n;
+					down = new_n+1;
 					new_n = random_function(new_n, up);
 				}
 				else if(my_answer == '<'){
-					up = new_n;
+					up = new_n-1;
 					new_n = random_function(down, new_n);
 				}
 				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
@@ -176,11 +176,11 @@ int main() {
 				my_answer = getchar();
 				if (my_answer != '>' && my_answer != '<' && my_answer != '=') { printf("Ooops, mistake!\n"); return 1; }
 				if (my_answer == '>') {
-					down = new_n;
+					down = new_n+1;
 					new_n = random_function(new_n, up);
 				}
 				else if (my_answer == '<') {
-					up = new_n;
+					up = new_n-1;
 					new_n = random_function(down, new_n);
 				}
 				else if (my_answer == '=') { printf("My congrats!You guessed!\n"); printf("Used attempts: %d\n", i); break; }
