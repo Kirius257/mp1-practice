@@ -11,7 +11,7 @@ int random_function(int start, int end)
 
 	srand(time(NULL));
 
-	n = start + rand() % (end - start + 1);
+	n = start + rand() % (end - start);
 
 	return n;
 	
