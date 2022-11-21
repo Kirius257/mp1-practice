@@ -67,26 +67,25 @@ int basket[N_BASKET] = { 0 };	//virtual basket
 
 int auxiliary_basket[N_BASKET] = { 1234,9876,5243,5791,2913,5555,2157,3002,1111,7748 }; //ordered array
 
-int scanner(int* arr) {
+int scanner(int* arr) {//FUNCTION1: scanning codes base of products}
 	int i,j, scan_status;
 	for (i = 0; i <= DATABASE; i++) {
-		scan_status = strcmp(arr, *(barcodes + i) + 0); //FUNCTION1: scanning codes base of products
+		scan_status = strcmp(arr, *(barcodes + i) + 0);
 		if (scan_status == 0) break;
 	}
 	return scan_status;
 }
-void display_description() {
+void display_description() {//FUNCTION2: display basket
 	int i = 0,j=0, choice;
 	int* p;
 	char* f;
 	p = product_description; //get adress massive of product_description
-	f = products;
+	f = products; //get adress massive of products
 	printf("%s\n", caption_des);
 	for (i = 0; i < N_BASKET; i++) {
 		for (j = 0; j < N_BASKET; j++) {
 			if (basket[i] == auxiliary_basket[j]) {
-				//printf("%s\n", caption_des);
-				printf("%s", products[j]);
+				printf("%s", products[j]);											//нужно дописать условие на 1234 код
 				printf("	    %d	 %d		    %d", *(p+3*j+0),*(p+3*j+1),*(p+3*j+2)); 	
 				printf("\n");
 					}
@@ -99,7 +98,7 @@ void add_data(int* cartoo)
 {
 	int el; //barcode from the cart
 	int u,s,n; //counters
-	int* p_check = the_check;
+	int* p_check = the_check;														//воспользоваться алгоритмом второй функции
 	for (n = 0; n < N_BASKET;n++) {
 		if (basket[n] == 0) { //If the basket can is empty
 			break;
