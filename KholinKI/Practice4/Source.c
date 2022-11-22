@@ -54,9 +54,10 @@ int product_description[10][3] =
 
 };//Database
 char caption_check[CAP] = { "Product   Cost_per_unit,P   Quantity,   Total cost" };	//caption for design#2
-int the_check[10][3]; //Purchase receipt
 
+int the_check[10][2]; //Purchase receipt
 
+char headline_check[10] = { "The check" };
 
 double cost_per_unit[COSPERUNIT] = { 50, 70, 249, 899, 69888, 35, 18, 3, 5, 18999 };	//array of costs per unit products
 
@@ -64,8 +65,11 @@ int discount[DCOUNT] = { 1,5,10,15,20,25,30,35,40,50 };	//massive discounts
 
 int basket[N_BASKET] = { 0 };	//virtual basket
 
+int basket_indices[10];
 
 int auxiliary_basket[N_BASKET] = { 1234,9876,5243,5791,2913,5555,2157,3002,1111,7748 }; //ordered array
+
+double total_cost;
 
 int scanner(int* arr) {//FUNCTION1: scanning codes base of products}
 	int i,j, scan_status;
@@ -76,7 +80,7 @@ int scanner(int* arr) {//FUNCTION1: scanning codes base of products}
 	return scan_status;
 }
 void display_description() {//FUNCTION2: display basket
-	int i = 0,j=0, choice;
+	int i = 0,j=0;
 	int* p;
 	char* f;
 	p = product_description; //get adress massive of product_description
@@ -85,7 +89,7 @@ void display_description() {//FUNCTION2: display basket
 	for (i = 0; i < N_BASKET; i++) {
 		for (j = 0; j < N_BASKET; j++) {
 			if (basket[i] == auxiliary_basket[j]) {
-				printf("%s", products[j]);											//нужно дописать условие на 1234 код
+				printf("%s", products[j]);										
 				printf("	    %d	 %d		    %d", *(p+3*j+0),*(p+3*j+1),*(p+3*j+2)); 	
 				printf("\n");
 					}
@@ -94,28 +98,71 @@ void display_description() {//FUNCTION2: display basket
 	}
 	
 
-void add_data(int* cartoo) 
+void add_data(int* cartoo)
 {
 	int el; //barcode from the cart
-	int u,s,n; //counters
-	int* p_check = the_check;														//воспользоваться алгоритмом второй функции
-	for (n = 0; n < N_BASKET;n++) {
-		if (basket[n] == 0) { //If the basket can is empty
-			break;
-		}
-		el = *(cartoo+n);
-		for (u = 0; u < 10; u++) {
-			for (s = 0; s < 3; s++) {
-				if (el == product_description[u][s]) {	//Linear search over a two-dimensional array
-					the_check[u][s] = el;
+	int v, u, n = 0, kol = 1; //counters
+	int duplicate_protection_status = 0; //creating a duplicate protection indicator 
+	for (n = 0; n < N_BASKET; n++) {
+		el = *(cartoo + n);
+		if (el == 0)break;
+		for (u = 0; u < N_BASKET; u++) {
+			if (el == product_description[u][0]) {
+				if (the_check[u][0] != 0) {
+					duplicate_protection_status = 1;
+					break;
 				}
+				the_check[u][0] = product_description[u][1];
+				basket_indices[n] = u;
+				//printf("%s		 %d", products[u], the_check[u][0]);
+				break;
 			}
 		}
+		if (duplicate_protection_status == 0) {
+			for (v = 0; v < N_BASKET; v++) {
+				if (basket[n] == basket[v] && v != n) {//comparing the elements of the basket using the pointer to the n-th element of the basket
+					kol++;
+				}
+			}
+			the_check[u][1] = kol;
+			//printf("		 %d\n", the_check[u][1]);
+			kol = 1; 
+		}
+		duplicate_protection_status = 0;
 	}
-	printf("%s\n", caption_check);
-	printf("%d\n", the_check[1][0]);
 }
 
+
+
+void generate_a_check() {
+	int* x = the_check; //pointer for check_massive
+	int* y = products; //pointer for products
+	int* z = basket_indices; //pointer for basket_indecis by which we get the positions of the elements of a two-dimensional array
+	int i=0;
+	printf("				%s\n", headline_check); //caption check
+	printf("%s\n", caption_check);				//subheadings check
+	for (i = 0; i < N_BASKET; i++) {
+		if (basket_indices[i] >= 0) {
+			if (basket_indices[i] == 0 && i != 0) {//Protection against "empty indexes"
+				break;
+			}
+			printf("%s", products[basket_indices[i]]);				//*
+			printf("		%d", the_check[basket_indices[i]][0]);	//CHECK OUTPUT!
+			printf("		%d\n", the_check[basket_indices[i]][1]);//*
+		}
+	}
+}
+
+int calculator_total_cost() {
+	int k; //counter
+	for (k = 0; k < 10; k++) {
+		if (basket_indices[k] == 0 && k != 0) {//Protection against "empty indexes"
+			break;
+		}
+		total_cost += (the_check[basket_indices[k]][0] * the_check[basket_indices[k]][1]);
+	}
+	return total_cost;
+}
 
 int main() {
 	setlocale(LC_ALL, "Rus");
@@ -163,8 +210,15 @@ int main() {
 				break;
 			}
 			case 3: {
-				add_data(basket);
+				add_data(basket); //Adding product data to the receipt
 				break;
+			}
+			case 4: {
+				generate_a_check();
+			}
+			case 5: {
+				total_cost = calculator_total_cost();
+				printf("Total cost: %f\n", total_cost);
 			}
 	  }//сюда вставить дефолт против ненайденного действия.
 	  
@@ -177,8 +231,9 @@ int main() {
 														// Кейс1: 1) код не найден
 														//		  2) на сигнал
 														//	Кейс2: на чойс
-														// 
+														//  Кейс3: -
+														//  Кейс4: -
 														// 
 														// Идеальное решение - else
-														// Задача: построить таблицу для чека
+														// Задача: настроить калькулятор и формулу подсчёта общей стоимости
 														//*
