@@ -37,19 +37,19 @@ char products[10][10] =//products database ^^/
 	"sofa"
 };
 
-char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,Р      Discount,%" };	//caption for design#1
+char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,Гђ      Discount,%" };	//caption for design#1
 int product_description[10][3] =
 {
   //barcode		cost_per_unit			discount
-	{1234,			50,						1},
-	{9876,			70,						5},
+	{1234,			50,					1},
+	{9876,			70,					5},
 	{5243,			249,					10},
 	{5791,			899,					15},
 	{2913,			69888,					20},
-	{5555,			35,						25},
-	{2157,			18,						30},
-	{3002,			3,						35},
-	{1111,			5,						40},
+	{5555,			35,					25},
+	{2157,			18,					30},
+	{3002,			3,					35},
+	{1111,			5,					40},
 	{7748,			18999,					50}			
 
 
@@ -229,7 +229,7 @@ int main() {
 			case 5: {
 				printf("\n");
 				total_cost = calculator_total();
-				printf("Total cost: %dP\n", total_cost);
+				printf("Total cost: %dP\n", total_cost); //Summing up the total cost of the purchase:
 				stop = 1;
 				break;
 			}
@@ -240,14 +240,14 @@ int main() {
 	return 0;
 }
 														//*
-														// Контроль данных::
-														// На свитч: смотреть дефолт
-														// Кейс1: 1) код не найден
-														//		  2) на сигнал
-														//	Кейс2: на чойс
-														//  Кейс3: -
-														//  Кейс4: -
+														// ГЉГ®Г­ГІГ°Г®Г«Гј Г¤Г Г­Г­Г»Гµ::
+														// ГЌГ  Г±ГўГЁГІГ·: Г±Г¬Г®ГІГ°ГҐГІГј Г¤ГҐГґГ®Г«ГІ
+														// ГЉГҐГ©Г±1: 1) ГЄГ®Г¤ Г­ГҐ Г­Г Г©Г¤ГҐГ­
+														//		  2) Г­Г  Г±ГЁГЈГ­Г Г«
+														//	ГЉГҐГ©Г±2: Г­Г  Г·Г®Г©Г±
+														//  ГЉГҐГ©Г±3: -
+														//  ГЉГҐГ©Г±4: -
 														// 
-														// Идеальное решение - else
+														// Г€Г¤ГҐГ Г«ГјГ­Г®ГҐ Г°ГҐГёГҐГ­ГЁГҐ - else
 														// 
 														//*
