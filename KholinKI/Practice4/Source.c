@@ -2,12 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <math.h>
 #define N_BASKET 10
 #define DATABASE 10
 #define DCOUNT 10
 #define COSPERUNIT 10
 #define HEADLINE 51
-#define CAP 50
+#define CAP 53
 char barcodes[10][5] =//barcodes database 0=0|___
 {
 	"1234",
@@ -53,23 +54,23 @@ int product_description[10][3] =
 
 
 };//Database
-char caption_check[CAP] = { "Product   Cost_per_unit,P   Quantity,   Total cost" };	//caption for design#2
+char caption_check[CAP] = { "Product   Cost_per_unit,P   Quantity,   Total cost, P" };	//caption for design#2
 
-int the_check[10][2]; //Purchase receipt
+int the_check[10][3]; //Purchase receipt
 
 char headline_check[10] = { "The check" };
 
-double cost_per_unit[COSPERUNIT] = { 50, 70, 249, 899, 69888, 35, 18, 3, 5, 18999 };	//array of costs per unit products
+int cost_per_unit[COSPERUNIT] = { 50, 70, 249, 899, 69888, 35, 18, 3, 5, 18999 };	//array of costs per unit products
 
 int discount[DCOUNT] = { 1,5,10,15,20,25,30,35,40,50 };	//massive discounts
 
 int basket[N_BASKET] = { 0 };	//virtual basket
 
-int basket_indices[10];
+int basket_indices[10] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
 int auxiliary_basket[N_BASKET] = { 1234,9876,5243,5791,2913,5555,2157,3002,1111,7748 }; //ordered array
 
-double total_cost;
+int total_cost;
 
 int scanner(int* arr) {//FUNCTION1: scanning codes base of products}
 	int i,j, scan_status;
@@ -103,17 +104,19 @@ void add_data(int* cartoo)
 	int el; //barcode from the cart
 	int v, u, n = 0, kol = 1; //counters
 	int duplicate_protection_status = 0; //creating a duplicate protection indicator 
+//	printf("				%s\n", headline_check); //caption check
+//	printf("%s\n", caption_check);				//subheadings check
 	for (n = 0; n < N_BASKET; n++) {
 		el = *(cartoo + n);
 		if (el == 0)break;
 		for (u = 0; u < N_BASKET; u++) {
 			if (el == product_description[u][0]) {
 				if (the_check[u][0] != 0) {
-					duplicate_protection_status = 1;
+					duplicate_protection_status = 1; //tactical protection activated! ^^
 					break;
 				}
 				the_check[u][0] = product_description[u][1];
-				basket_indices[n] = u;
+				basket_indices[n] = u; //write index to basket indices
 				//printf("%s		 %d", products[u], the_check[u][0]);
 				break;
 			}
@@ -125,19 +128,16 @@ void add_data(int* cartoo)
 				}
 			}
 			the_check[u][1] = kol;
-			//printf("		 %d\n", the_check[u][1]);
+		//	printf("		 %d\n", the_check[u][1]);
 			kol = 1; 
 		}
-		duplicate_protection_status = 0;
+		duplicate_protection_status = 0; //off status duplicate protection
 	}
 }
 
 
 
 void generate_a_check() {
-	int* x = the_check; //pointer for check_massive
-	int* y = products; //pointer for products
-	int* z = basket_indices; //pointer for basket_indecis by which we get the positions of the elements of a two-dimensional array
 	int i=0;
 	printf("				%s\n", headline_check); //caption check
 	printf("%s\n", caption_check);				//subheadings check
@@ -146,20 +146,23 @@ void generate_a_check() {
 			if (basket_indices[i] == 0 && i != 0) {//Protection against "empty indexes"
 				break;
 			}
-			printf("%s", products[basket_indices[i]]);				//*
-			printf("		%d", the_check[basket_indices[i]][0]);	//CHECK OUTPUT!
-			printf("		%d\n", the_check[basket_indices[i]][1]);//*
+			printf("%s", products[basket_indices[i]]);								//name product								//*
+			printf("		%d", the_check[basket_indices[i]][0]);					//cost per unit								//
+			printf("		%d", the_check[basket_indices[i]][1]);					//quantity									//CHECK OUTPUT!
+			the_check[basket_indices[i]][2] = (the_check[basket_indices[i]][0]- rint(((the_check[basket_indices[i]][0] * discount[basket_indices[i]])/100))) * the_check[basket_indices[i]][1];	//Calculation of the cost of goods at a discount
+			printf("	  %d", the_check[basket_indices[i]][2]); //total cost product											//*
+			printf("\n");
 		}
 	}
 }
 
-int calculator_total_cost() {
+int calculator_total() {
 	int k; //counter
 	for (k = 0; k < 10; k++) {
-		if (basket_indices[k] == 0 && k != 0) {//Protection against "empty indexes"
-			break;
+		if (basket_indices[k] < 0) {//Protection against "empty indexes"
+			continue;
 		}
-		total_cost += (the_check[basket_indices[k]][0] * the_check[basket_indices[k]][1]);
+		total_cost = total_cost + the_check[basket_indices[k]][2];
 	}
 	return total_cost;
 }
@@ -167,14 +170,18 @@ int calculator_total_cost() {
 int main() {
 	setlocale(LC_ALL, "Rus");
 	char code[5];//barcode product buyer`s
-	int scan_status,signal=1, i = 0,j=0,save,flag=1,indicator=0; //signals and counters
-	int choice;
+	int scan_status,signal=1, i = 0,j=0,save,indicator=0,stop = 0,mark = 0; //signals and counters
+	int choice; //selection variable
+	int sum_discount = 0;
 	code[4] = 0;
 	printf("Welcome to the cash register!\n"); //Start
 	do {
+		if (mark == 0) {
 		printf("Choose an action:\n");
-		printf("1. Scan product\n2. Display discription product\n3. Add data about product into the check\n4. Generate a receipt for the purchase\n5. Calculate the total amount to be paid\n");
+		printf("1. Scan product\n2. Display description of scanned products\n3. Add data about products into the check\n4. Generate a receipt for the purchase\n5. Calculate the total amount to be paid\n");
 		printf("\n");
+		mark = 1;
+		}
 		scanf("%d", &choice);
 		switch (choice)
 		{
@@ -211,18 +218,25 @@ int main() {
 			}
 			case 3: {
 				add_data(basket); //Adding product data to the receipt
+				printf("Product data has been successfully added to the check!\n");
+				printf("\n");
 				break;
 			}
 			case 4: {
-				generate_a_check();
+				generate_a_check(); //Generating a receipt for a purchase...
+				break;
 			}
 			case 5: {
-				total_cost = calculator_total_cost();
-				printf("Total cost: %f\n", total_cost);
+				printf("\n");
+				total_cost = calculator_total();
+				printf("Total cost: %dP\n", total_cost);
+				stop = 1;
+				break;
 			}
-	  }//сюда вставить дефолт против ненайденного действия.
-	  
-	} while (flag == 1);
+			default: {printf("Action not found!"); return -999999999999; }
+		}
+	} while (stop == 0);
+	printf("Have a nice day!\n"); //end
 	return 0;
 }
 														//*
@@ -235,5 +249,5 @@ int main() {
 														//  Кейс4: -
 														// 
 														// Идеальное решение - else
-														// Задача: настроить калькулятор и формулу подсчёта общей стоимости
+														// 
 														//*
