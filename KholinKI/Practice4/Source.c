@@ -37,7 +37,7 @@ char products[10][10] =//products database ^^/
 	"sofa"
 };
 
-char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,Ð      Discount,%" };	//caption for design#1
+char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,P      Discount,%" };	//caption for design#1
 int product_description[10][3] =
 {
   //barcode		cost_per_unit			discount
@@ -213,8 +213,9 @@ int main() {
 			{
 				display_description(); //output description product
 				printf("The product display has been successfully completed!\n");
-				printf("\n");
-				break;
+				printf("\n");															
+																					
+				break;													
 			}
 			case 3: {
 				add_data(basket); //Adding product data to the receipt
@@ -239,15 +240,4 @@ int main() {
 	printf("Have a nice day!\n"); //end
 	return 0;
 }
-														//*
-														// Êîíòðîëü äàííûõ::
-														// Íà ñâèò÷: ñìîòðåòü äåôîëò
-														// Êåéñ1: 1) êîä íå íàéäåí
-														//		  2) íà ñèãíàë
-														//	Êåéñ2: íà ÷îéñ
-														//  Êåéñ3: -
-														//  Êåéñ4: -
-														// 
-														// Èäåàëüíîå ðåøåíèå - else
-														// 
-														//*
+														
