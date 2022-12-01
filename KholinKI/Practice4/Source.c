@@ -37,19 +37,19 @@ char products[10][10] =//products database ^^/
 	"sofa"
 };
 
-char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,P      Discount,%" };	//caption for design#1
+char caption_des[HEADLINE] = { "Product   Barcode   Cost_per_unit,Ð      Discount,%" };	//caption for design#1
 int product_description[10][3] =
 {
   //barcode		cost_per_unit			discount
-	{1234,			50,					1},
-	{9876,			70,					5},
+	{1234,			50,						3},
+	{9876,			70,						5},
 	{5243,			249,					10},
 	{5791,			899,					15},
 	{2913,			69888,					20},
-	{5555,			35,					25},
-	{2157,			18,					30},
-	{3002,			3,					35},
-	{1111,			5,					40},
+	{5555,			35,						25},
+	{2157,			18,						30},
+	{3002,			3,						35},
+	{1111,			5,						40},
 	{7748,			18999,					50}			
 
 
@@ -58,11 +58,11 @@ char caption_check[CAP] = { "Product   Cost_per_unit,P   Quantity,   Total cost,
 
 int the_check[10][3]; //Purchase receipt
 
-char headline_check[10] = { "The check" };
+char headline_check[10] = { "The check" }; // caption for design#3
 
 int cost_per_unit[COSPERUNIT] = { 50, 70, 249, 899, 69888, 35, 18, 3, 5, 18999 };	//array of costs per unit products
 
-int discount[DCOUNT] = { 1,5,10,15,20,25,30,35,40,50 };	//massive discounts
+int discount[DCOUNT] = { 3,5,10,15,20,25,30,35,40,50 };	//massive discounts
 
 int basket[N_BASKET] = { 0 };	//virtual basket
 
@@ -70,6 +70,7 @@ int basket_indices[10] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
 int auxiliary_basket[N_BASKET] = { 1234,9876,5243,5791,2913,5555,2157,3002,1111,7748 }; //ordered array
 
+int  tc_without_d;
 int total_cost;
 
 int scanner(int* arr) {//FUNCTION1: scanning codes base of products}
@@ -84,14 +85,26 @@ void display_description() {//FUNCTION2: display basket
 	int i = 0,j=0;
 	int* p;
 	char* f;
+	int copy_basket[10];
+	for (i = 0; i < N_BASKET; i++) {
+		copy_basket[i] = basket[i]; //filling copy basket of original
+	}
 	p = product_description; //get adress massive of product_description
 	f = products; //get adress massive of products
-	printf("%s\n", caption_des);
+	for(i =0; i < N_BASKET; i++){
+		for (j = i+1; j < N_BASKET; j++) {
+			if (copy_basket[i] == basket[j]) {
+				copy_basket[j] = 0;
+			}
+		}
+	}															//*Using a copy of the original cart, so as not to break the linkage of the original 
+																// with other variables that are linked or dependent on it(prototype protection_duplicate)
+	printf("%s\n", caption_des);								//*
 	for (i = 0; i < N_BASKET; i++) {
-		for (j = 0; j < N_BASKET; j++) {
-			if (basket[i] == auxiliary_basket[j]) {
+		for (j = 0; j < N_BASKET; j++) {					
+			if (copy_basket[i] == auxiliary_basket[j]) {//search element in auxiliary_basket
 				printf("%s", products[j]);										
-				printf("	    %d	 %d		    %d", *(p+3*j+0),*(p+3*j+1),*(p+3*j+2)); 	
+				printf("	    %d	 %d		    %d", *(p+3*j+0),*(p+3*j+1),*(p+3*j+2)); 	//Arithmetic - pointer shifter
 				printf("\n");
 					}
 				}
@@ -110,7 +123,7 @@ void add_data(int* cartoo)
 		el = *(cartoo + n);
 		if (el == 0)break;
 		for (u = 0; u < N_BASKET; u++) {
-			if (el == product_description[u][0]) {
+			if (el == product_description[u][0]) {		//FUNCTION3: add data about products to the check
 				if (the_check[u][0] != 0) {
 					duplicate_protection_status = 1; //tactical protection activated! ^^
 					break;
@@ -139,17 +152,18 @@ void add_data(int* cartoo)
 
 void generate_a_check() {
 	int i=0;
+	int tc_without_d;
 	printf("				%s\n", headline_check); //caption check
 	printf("%s\n", caption_check);				//subheadings check
-	for (i = 0; i < N_BASKET; i++) {
+	for (i = 0; i < N_BASKET; i++) {													//FUNCTION4: generate a check
 		if (basket_indices[i] >= 0) {
-			if (basket_indices[i] == 0 && i != 0) {//Protection against "empty indexes"
-				break;
-			}
+		//	if (basket_indices[i] == 0 && i != 0) {//Protection against "empty indexes" 
+		//		break;
+		//	}									
 			printf("%s", products[basket_indices[i]]);								//name product								//*
 			printf("		%d", the_check[basket_indices[i]][0]);					//cost per unit								//
 			printf("		%d", the_check[basket_indices[i]][1]);					//quantity									//CHECK OUTPUT!
-			the_check[basket_indices[i]][2] = (the_check[basket_indices[i]][0]- rint(((the_check[basket_indices[i]][0] * discount[basket_indices[i]])/100))) * the_check[basket_indices[i]][1];	//Calculation of the cost of goods at a discount
+			the_check[basket_indices[i]][2] = (the_check[basket_indices[i]][0]- rint(((the_check[basket_indices[i]][0] * discount[basket_indices[i]])*0.01))) * the_check[basket_indices[i]][1];	//Calculation of the cost of goods at a discount
 			printf("	  %d", the_check[basket_indices[i]][2]); //total cost product											//*
 			printf("\n");
 		}
@@ -161,7 +175,8 @@ int calculator_total() {
 	for (k = 0; k < 10; k++) {
 		if (basket_indices[k] < 0) {//Protection against "empty indexes"
 			continue;
-		}
+		}																	//calculating total cost and savings
+		tc_without_d = tc_without_d + (the_check[basket_indices[k]][0] * the_check[basket_indices[k]][1]);
 		total_cost = total_cost + the_check[basket_indices[k]][2];
 	}
 	return total_cost;
@@ -172,7 +187,7 @@ int main() {
 	char code[5];//barcode product buyer`s
 	int scan_status,signal=1, i = 0,j=0,save,indicator=0,stop = 0,mark = 0; //signals and counters
 	int choice; //selection variable
-	int sum_discount = 0;
+	int savings;
 	code[4] = 0;
 	printf("Welcome to the cash register!\n"); //Start
 	do {
@@ -213,9 +228,8 @@ int main() {
 			{
 				display_description(); //output description product
 				printf("The product display has been successfully completed!\n");
-				printf("\n");															
-																					
-				break;													
+				printf("\n");
+				break;
 			}
 			case 3: {
 				add_data(basket); //Adding product data to the receipt
@@ -230,7 +244,8 @@ int main() {
 			case 5: {
 				printf("\n");
 				total_cost = calculator_total();
-				printf("Total cost: %dP\n", total_cost); //Summing up the total cost of the purchase:
+				printf("Total cost: %dP\n", total_cost);
+				printf("Your savings: %dP\n", (tc_without_d - total_cost));
 				stop = 1;
 				break;
 			}
