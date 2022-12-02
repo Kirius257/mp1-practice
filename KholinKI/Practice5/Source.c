@@ -31,57 +31,67 @@ void insert_sort(int* arr, int size) {
 	}
 }
 
-void QuickSort(float* a, int N)
+int partition(int list[], int start, int pivot)
 {
-	int tmp, i = 0, j = N - 1, mid = (i + j) / 2;
-	float pivot = a[mid];
-	while (i > j)
+	int tmp1,tmp2; //saved 
+	int i = start; //start sorting to index 0
+	while (i < pivot)
 	{
-		while (a[i] < pivot)
+		tmp1 = list[i];
+		tmp2 = list[pivot - 1];
+		if (list[i] > list[pivot] && i == pivot - 1)//the last sorting step, when the final element is to be thrown
 		{
-			i++;
+			list[i] = list[pivot];//IS THE POSITION OF THE REFERENCE ELEMENT THAT THE FUNCTION WILL RETURN!
+			list[pivot] = tmp1;
+			pivot--;
 		}
-		while (a[j] > pivot)
+
+		else if (list[i] > list[pivot])//if an element larger than the reference element is found
 		{
-			j++;
+			list[pivot - 1] = list[pivot];//move the reference element one unit to the left
+			list[pivot] = tmp2;//and place the larger element to the right of the reference
+			list[i] = list[pivot];
+			list[pivot] = tmp1; //similar to the previous one swap
+			pivot--;
 		}
-		if (i < j)
-		{
-			tmp = a[i];
-			a[i] = a[j];					//don`t work:(
-			a[j] = tmp;
-			i++;
-			j--;
-		}
+
+		else i++;//to the next element of the array for comparison with the reference element
 	}
-	if (j > 0)
+	return pivot;
+}
+
+void quickSort(int list[], int start, int end)
+{
+	if (start < end)
 	{
-		QuickSort(a, j);
-	}
-	if (i < N - 1)
-	{
-		QuickSort(a + i, N - 1 - i);
+		int pivot = partition(list, start, end);//get index reference element
+
+		quickSort(list, start, pivot - 1);//array with smaller elements
+		quickSort(list, pivot + 1, end);//array with bigger elements
 	}
 }
+
 
 int main() {
 	int a[10] = { 152,152,12,800,991,7,-205,-9,12 }; //unordered array #1
 	int b[10] = { 100,-10,60,400,-1000,30,-50,29,0,5 }; //unordered array #2
-	int c[10] = { 2,1,0,-50,111,111,55,1000,345,1 }; //unorderd array #3
+	int c[10] = { -11,-59,-12131,893,1,3,0,-2,100000,40}; //unorderd array #3
 	int i; //counter
 	choice_sort(a, 10); //call sort choice
 	insert_sort(b, 10); //call sort insert
-	QuickSort(c, 10); //call quick
+	quickSort(c, 0,9); //call quick
 	for (i = 0; i < 10; i++) {
-		printf("%d ", a[i]);
+		printf("%d ", a[i]);	//sorted by Choice
 	}
 	printf("\n");
 	for (i = 0; i < 10; i++) {
-		printf("%d ", b[i]);
+		printf("%d ", b[i]);	//sorted by Insert
 	}
 	printf("\n");
 	for (i = 0; i < 10; i++) {
-		printf("%d ", c[i]);
+		printf("%d ", c[i]);	//sorted by Quick
 	}
 	return 0;
 }
+
+//начать работу с файлами
