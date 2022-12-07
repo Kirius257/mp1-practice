@@ -1,27 +1,34 @@
 #include <stdio.h>
 #include <windows.h>
 #include "Sorts.h"
+#include <time.h>
+#include <string.h>
+
+
 
 int main() {
-	int a[10] = { 152,152,12,800,991,7,-205,-9,12 }; //unordered array #1
-	int b[10] = { 100,-10,60,400,-1000,30,-50,29,0,5 }; //unordered array #2
-	int c[10] = { -11,-59,-12131,893,1,3,0,-2,100000,40}; //unorderd array #3
-	int i; //counter
-	ChoiceSort(a, 10); //call sort choice
-	InsertSort(b, 10); //call sort insert
-	QuickSort(c, 0,9); //call quick
-	for (i = 0; i < 10; i++) {
-		printf("%d ", a[i]);	//sorted by Choice
-	}
-	printf("\n");
-	for (i = 0; i < 10; i++) {
-		printf("%d ", b[i]);	//sorted by Insert
-	}
-	printf("\n");
-	for (i = 0; i < 10; i++) {
-		printf("%d ", c[i]);	//sorted by Quick
+	int answer;
+	char path; //path directory
+	printf("Hello, welcome to the file manager! Choose a method for sorting file structures from the menu: \n");
+	printf("Sorting menu: \n");
+	printf("1. Sorting by choice\n");									//Greeting and sorting selection
+	printf("2. Sorting by inserts\n");
+	printf("3. Hoare Sorting\n");
+	scanf("%d", &answer); //Making choices
+	
+
+	switch (answer) {
+		case 1:	
+			printf("Enter the path for the directory by which you want to sort the content:\n");
+			scanf("%s", &path); //file path
+			path(path);
+			break;
+		case 2:															
+			break;
+		case 3:
+			break;
 	}
 	return 0;
 }
 
-//начать работу с файлами
+
