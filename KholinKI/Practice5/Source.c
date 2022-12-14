@@ -4,14 +4,19 @@
 #include <time.h>
 #include <string.h>
 #include <conio.h>
+#include <io.h>
+#include <direct.h>
+#include <locale.h>
+
 
 char path[100]; //path directory
 
 
 int main() {
+	setlocale(LC_ALL,"rus");
 	int answer;
 	char save;
-	char path[100]; //path directory
+	char path[300]; //path directory
 	save = path[0];
 	printf("Hello, welcome to the file manager! Choose a method for sorting file structures from the menu: \n");
 	printf("Sorting menu: \n");
@@ -20,26 +25,25 @@ int main() {
 	printf("3. Hoare Sorting\n");
 	scanf_s("%d", &answer); //Making choices
 	getchar();
-	
-	if (answer == 1) {
-		path[0] = save;
-		printf("Enter the path for the directory by which you want to sort the content:");
-		fgets(path, 100, stdin); //file path
-		puts(path);
+	switch (answer)
+	{
+		case 1: 
+		{
+			printf("Enter the path for the directory where you want to sort the content: ");
+			printf("\n");
+			gets(path);
+			struct _finddata_t data;
+			HANDLE cursor;
+			cursor = FindFirstFile(path, &data);
+			if (cursor != INVALID_HANDLE_VALUE) {
+				do{
+					printf("%s", data.name);
+				} while ((FindNextFile(cursor, &data))==0);
+				FindClose(cursor);
+			}
+			
+		}
 	}
-	else if (answer == 2) {
-		printf("Enter the path for the directory by which you want to sort the content:");
-		fgets(path, 100, stdin); //file path
-		puts(path);
-	}
-	else {
-		printf("Enter the path for the directory by which you want to sort the content:");
-		fgets(path, 100, stdin); //file path
-		puts(path);
-	}
-	/*
-	* План решения пятой лабораторки(см.вк)
-	*/
 	return 0;
 }
 
