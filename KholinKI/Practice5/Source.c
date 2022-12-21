@@ -5,13 +5,13 @@
 #include <string.h>
 #include <conio.h>
 #include <locale.h>
-#define N 2000
+#define N 1000
 
 struct files {
 	char name[260];
 	unsigned long size;
 };
-struct files new_data[2000];
+struct files new_data[1000];
 
 void copy(char* names, wchar_t* data) {
 	int i=0;
@@ -23,7 +23,9 @@ void copy(char* names, wchar_t* data) {
 }
 
 
-long sizes[N];
+long sizes[N]; //original 
+long copy_sizes[N]; //copy sizes
+long indices[N];
  
  void File_manager() {
 	 int counter = 0;
@@ -61,19 +63,11 @@ long sizes[N];
 
  void output_sizes() {//
 	 int i, j;
-	 int save;
-	 int saved_sizes[N];
 	 for (i = 0; i < N; i++) {
-		 for (j = 0; j < N; j++) {	//
-			 save = new_data[j].size;
-			 if (sizes[i] == new_data[j].size) {
-				 if (new_data[j].size != -1) {
-					 printf("%s      %ldBytes\n", new_data[j].name, new_data[j].size);
-					 saved_sizes[j] = new_data[j].size; //Backup field
-					 new_data[j].size = -1;
-				 }
-			 }
+		 if (new_data[indices[i]].size == 0) {
+			 continue;
 		 }
+		 printf("%s      %d\n", new_data[indices[i]].name, new_data[indices[i]].size);
 	 }
  }
 
@@ -82,6 +76,10 @@ int main() {
 	setlocale(LC_ALL,"rus");
 	int answer; //for communication with user
 	int status = 1;
+	int i;
+	for (i = 0; i < N; i++) {
+		indices[i] = i;
+	}
 	printf("Hello, welcome to the file manager! Choose a method for sorting file structures from the menu: \n");
 	do{
 	printf("Sorting menu: \n");
@@ -95,8 +93,11 @@ int main() {
 		case 1:
 		{
 			File_manager();
+			for (i = 0; i < N; i++) {
+				copy_sizes[i] = sizes[i];
+			}
 			clock_t begin = clock();
-			ChoiceSort(sizes, N);
+			ChoiceSort(copy_sizes, N,indices);
 			clock_t end = clock();
 			output_sizes();
 			long double q = end;
@@ -111,8 +112,11 @@ int main() {
 		case 2:
 		{
 			File_manager();
+			for (i = 0; i < N; i++) {
+				copy_sizes[i] = sizes[i];
+			}
 			clock_t begin = clock();
-			InsertSort(sizes, N);
+			InsertSort(copy_sizes, N,indices);
 			clock_t end = clock();
 			output_sizes();
 			long double q = end;
@@ -127,8 +131,11 @@ int main() {
 		case 3:
 		{
 			File_manager();
+			for (i = 0; i < N; i++) {
+				copy_sizes[i] = sizes[i];
+			}
 			clock_t begin = clock();
-			QuickSort(sizes, 0, N);
+			QuickSort(copy_sizes, 0, N);
 			clock_t end = clock();
 			output_sizes();
 			long double q = end;

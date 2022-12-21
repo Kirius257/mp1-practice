@@ -1,21 +1,24 @@
 #pragma once
 
 
-void InsertSort(int* arr, int size) {
-	int i, j, tmp;
+void InsertSort(int* arr, int size,int*ind) {
+	int i, j, tmp,tmp2;
 	for (i = 0; i < size; i++) {
 		tmp = arr[i]; //main variable(saved)
+		tmp2 = ind[i];
 		j = i - 1;
 		while (j >= 0 && arr[j] > tmp) { //A pairwise comparison of tmp with previous elements.
 			arr[j + 1] = arr[j];//swapping tmp in place arr[j]
 			arr[j] = tmp; //insert saved element
+			ind[j + 1] = ind[j];
+			ind[j] = tmp2;
 			j--; //next iteration
 		}
 	}
 }
 
-void ChoiceSort(int* arr, int size) {//sorting by selection
-	int i, min, ind, j;
+void ChoiceSort(int* arr, int size,int*index) {//sorting by selection
+	int i, min, ind, j,tmp;
 	for (i = 0; i < size; i++) {
 		min = arr[i];  //The minimum becomes element i
 		ind = i; //save ind minimum`s
@@ -25,9 +28,12 @@ void ChoiceSort(int* arr, int size) {//sorting by selection
 				ind = j; //save index min
 			}
 		}
+		tmp = index[ind];
 		arr[ind] = arr[i];
+		index[ind] = index[i];
 		//SWAPPING: we put a new one in place of the old minimum
 		arr[i] = min;
+		index[i] = index[tmp];
 	}
 }
 
