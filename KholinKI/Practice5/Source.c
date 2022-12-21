@@ -5,13 +5,13 @@
 #include <string.h>
 #include <conio.h>
 #include <locale.h>
-#define N 1000
+#define N 5000
 
 struct files {
 	char name[260];
 	unsigned long size;
 };
-struct files new_data[1000];
+struct files new_data[5000];
 
 void copy(char* names, wchar_t* data) {
 	int i=0;
@@ -77,9 +77,6 @@ int main() {
 	int answer; //for communication with user
 	int status = 1;
 	int i;
-	for (i = 0; i < N; i++) {
-		indices[i] = i;
-	}
 	printf("Hello, welcome to the file manager! Choose a method for sorting file structures from the menu: \n");
 	do{
 	printf("Sorting menu: \n");
@@ -93,6 +90,9 @@ int main() {
 		case 1:
 		{
 			File_manager();
+			for (i = 0; i < N; i++) {
+				indices[i] = i;
+			}
 			for (i = 0; i < N; i++) {
 				copy_sizes[i] = sizes[i];
 			}
@@ -113,6 +113,9 @@ int main() {
 		{
 			File_manager();
 			for (i = 0; i < N; i++) {
+				indices[i] = i;
+			}
+			for (i = 0; i < N; i++) {
 				copy_sizes[i] = sizes[i];
 			}
 			clock_t begin = clock();
@@ -132,10 +135,13 @@ int main() {
 		{
 			File_manager();
 			for (i = 0; i < N; i++) {
+				indices[i] = i;
+			}
+			for (i = 0; i < N; i++) {
 				copy_sizes[i] = sizes[i];
 			}
 			clock_t begin = clock();
-			QuickSort(copy_sizes, 0, N);
+			quick_sort(copy_sizes, N, 0,indices);
 			clock_t end = clock();
 			output_sizes();
 			long double q = end;

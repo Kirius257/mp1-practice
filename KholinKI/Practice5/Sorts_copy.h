@@ -38,42 +38,55 @@ void ChoiceSort(int* arr, int size,int*index) {//sorting by selection
 }
 
 
-int partition(int list[], int start, int pivot)
-{
-	int tmp1, tmp2; //saved 
-	int i = start; //start sorting to index 0
-	while (i < pivot)
-	{
-		tmp1 = list[i];
-		tmp2 = list[pivot - 1];
-		if (list[i] > list[pivot] && i == pivot - 1)//the last sorting step, when the final element is to be thrown
-		{
-			list[i] = list[pivot];//IS THE POSITION OF THE REFERENCE ELEMENT THAT THE FUNCTION WILL RETURN!
-			list[pivot] = tmp1;
-			pivot--;
-		}
-
-		else if (list[i] > list[pivot])//if an element larger than the reference element is found
-		{
-			list[pivot - 1] = list[pivot];//move the reference element one unit to the left
-			list[pivot] = tmp2;//and place the larger element to the right of the reference
-			list[i] = list[pivot];
-			list[pivot] = tmp1; //similar to the previous one swap
-			pivot--;
-		}
-
-		else i++;//to the next element of the array for comparison with the reference element
-	}
-	return pivot;
+void swap(int* a, int* b) { // swap(&a, &b);
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
-void QuickSort(int list[], int start, int end)
-{
-	if (start < end)
-	{
-		int pivot = partition(list, start, end);//get index reference element
-
-		QuickSort(list, start, pivot - 1);//array with smaller elements
-		QuickSort(list, pivot + 1, end);//array with bigger elements
+void quick_sort_increase(int* a, int low, int high, int* indexes) {
+	int mid;
+	int l = low, h = high;
+	mid = a[(l + h) / 2];
+	while (l < h) {
+		while (a[l] < mid)
+			l++;
+		while (a[h] > mid)
+			h--;
+		if (l <= h) {
+			swap(&a[l], &a[h]);
+			swap(&indexes[l], &indexes[h]);
+			l++;
+			h--;
+		}
 	}
+	if (low < h)
+		quick_sort_increase(a, low, h,indexes);
+	if (l < high)
+		quick_sort_increase(a, l, high,indexes);
+}
+void quick_sort_decrease(int* a, int low, int high, int* indexes) {
+	int mid;
+	int l = low, h = high;
+	mid = a[(l + h) / 2];
+	while (l < h) {
+		while (a[l] > mid)
+			l++;
+		while (a[h] < mid)
+			h--;
+		if (l <= h) {
+			swap(&a[l], &a[h]);
+			swap(&indexes[l], &indexes[h]);
+			l++;
+			h--;
+		}
+	}
+	if (low < h)
+		quick_sort_decrease(a, low, h,indexes);
+	if (l < high)
+		quick_sort_decrease(a, l, high,indexes);
+}
+void quick_sort(int* a, int n, int mode, int*indexes) {
+	if (mode == 0)  quick_sort_increase(a, 0, n - 1, indexes);
+	if (mode == -1) quick_sort_decrease(a, 0, n - 1, indexes);
 }
