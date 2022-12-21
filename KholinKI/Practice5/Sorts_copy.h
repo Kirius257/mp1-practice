@@ -33,7 +33,7 @@ void ChoiceSort(int* arr, int size,int*index) {//sorting by selection
 		index[ind] = index[i];
 		//SWAPPING: we put a new one in place of the old minimum
 		arr[i] = min;
-		index[i] = index[tmp];
+		index[i] = tmp;
 	}
 }
 
