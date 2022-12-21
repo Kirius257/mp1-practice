@@ -38,6 +38,7 @@ long sizes[N];
 	 printf("Enter the path for the directory where you want to sort the content: ");
 	 printf("\n");
 	 gets(path);
+	 strcat(path, "/*");
 	 WIN32_FIND_DATA data;
 	 HANDLE cursor;
 	 cursor = FindFirstFileA(&path, &data);
@@ -77,17 +78,20 @@ long sizes[N];
  }
 
 int main() {
+	system("chcp 1251");
 	setlocale(LC_ALL,"rus");
-	int answer;
+	int answer; //for communication with user
+	int status = 1;
 	printf("Hello, welcome to the file manager! Choose a method for sorting file structures from the menu: \n");
+	do{
 	printf("Sorting menu: \n");
 	printf("1. Sorting by choice\n");									//Greeting and sorting selection
 	printf("2. Sorting by inserts\n");
 	printf("3. Hoare Sorting\n");
-	scanf_s("%d", &answer); //Making choices			
-	getchar();
-	switch (answer)
-	{
+		scanf_s("%d", &answer); //Making choices			
+		getchar();
+		switch (answer)
+		{
 		case 1:
 		{
 			File_manager();
@@ -99,6 +103,9 @@ int main() {
 			q /= 1000000;
 			printf("\n");
 			printf("Time of Choice Sort: %lf.\n", q);
+			memset(&new_data, 0, sizeof(new_data));
+			printf("Do you want change method of sorts?(1/0)\n");
+			scanf("%d", &status);
 			break;
 		}
 		case 2:
@@ -112,6 +119,9 @@ int main() {
 			q /= 1000000;
 			printf("\n");
 			printf("Time of Insert Sort: %lf.\n", q);
+			memset(&new_data, 0, sizeof(new_data));
+			printf("Do you want change method of sorts?(1/0)\n");
+			scanf("%d", &status);
 			break;
 		}
 		case 3:
@@ -125,9 +135,14 @@ int main() {
 			q /= 1000000;
 			printf("\n");
 			printf("Time of Quick Sort Sort: %lf.\n", q);
+			memset(&new_data, 0, sizeof(new_data));
+			printf("Do you want change method of sorts?(1/0)\n");
+			scanf("%d", &status);
 			break;
 		}
-	}
+		}
+	} while (status == 1);
+	printf("Have a nice day!");
 	return 0;
 }
 
