@@ -2,21 +2,30 @@
 #ifndef TRECEIPT_H
 #define TRECEIPT_H
 
+
 #include "TContainer.h"
+#include "TRecipline.h"
+
+
+
+
 
 class TReceipt {
 public:
-	long index;
+	long index;							
 	TDate* date;
 	TTime* time;
-	TContainer<?>* product;//КАКОЙ ТИП ЗДЕСЬ?
+	TContainer<TRecipline>* products;
+
+
+	TReceipt(TDate* date, TTime* time, TContainer<TRecipline>* products);
 
 	//что значит удалить запись и добавить?
 	void changer();//redactor of check
 	void find_product();//search
-	void calculate_cost();
-
+	void calculate_cost();//total cost purchase
 };
+
 
 class TDate {
 public:

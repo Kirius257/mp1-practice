@@ -3,31 +3,40 @@
 #define TCONTAINER_H
 #include "TRecipline.h"
 
-typedef TRecipline TElement;
+//typedef TRecipline TElement;
 
+
+//help: 
+//Enumeration in C++ is a data type that allows you to define a new type consisting of a set of named constants.
+//Constants in an enum can be assigned integer values, which can be used in a program to indicate certain states, flags or errors.
+
+
+enum TContainerExeption { cntINDOUTOFRANGE, cntVALOUTOFRANGE };
 template <class TELEM>
 class TContainer {
-protected:
-	TELEM* mass_elems;//element array
+protected:;
 	int size;//size array
 	int count_elements;//number of items
-	TElement* elements;//triple bottom line
+	TELEM* elements;//element array
 	const static int sizestep = 1;
-	void resize(int dsize = 0);//increase the length of the container
+	void realloc(int dsize = 0);//increase the length of the container
 public:
-	TContainer(int _size);//
-	TContainer(const TContainer& _cnt);
+	TContainer(void);
+	TContainer(int _size);//Каким образом произойдёт переполнение?
+	TContainer(const TContainer& obj);
 	~TContainer();
 	TELEM& operator[](int index);//indexing by number
-	TELEM& operator[](const TELEM& _ELM);//indexing by content
-	
-	void next();
-	void back();
-	void push_before();
-	void push_after();
+	TELEM& operator[](const TELEM& obj);//indexing by content
+	TContainer& operator=(const TContainer& obj);
 
-	int& Count() { return count; }
-	int& Sizestep() { return sizestep; }
+	void next();//move on element
+	void back();//move up element
+	void push_before();//insert element before
+	void push_after();//insert element after
+
+	int& get_count() { return count; }
+	int& get_sizestep() { return sizestep; }
+
 };
 
 #endif
