@@ -7,6 +7,6 @@ class TRecipline {
 public:
 	int num;
 	double sum;
-	TProduct* product;//выделять под количество num?
+	TProduct* product;
 };
 #endif

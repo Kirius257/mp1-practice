@@ -18,9 +18,9 @@ public:
 	TContainer<TRecipline>* products;
 
 
-	TReceipt(TDate* date, TTime* time, TContainer<TRecipline>* products);
+	TReceipt();//create data and time for check:set default
 
-	//что значит удалить запись и добавить?
+
 	void changer();//redactor of check
 	void find_product();//search
 	void calculate_cost();//total cost purchase

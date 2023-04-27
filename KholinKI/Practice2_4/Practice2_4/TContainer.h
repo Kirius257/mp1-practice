@@ -22,7 +22,7 @@ protected:;
 	void realloc(int dsize = 0);//increase the length of the container
 public:
 	TContainer(void);
-	TContainer(int _size);//Каким образом произойдёт переполнение?
+	TContainer(int _size);
 	TContainer(const TContainer& obj);
 	~TContainer();
 	TELEM& operator[](int index);//indexing by number
