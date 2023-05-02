@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TPRODUCT_H
-#define TPRODUCT_H
+#ifndef _TPRODUCT_H
+#define _TPRODUCT_H
 
 #include <string>
 

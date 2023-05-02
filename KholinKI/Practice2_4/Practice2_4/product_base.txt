@@ -1,0 +1,12 @@
+Quantity: 10
+0000 milk 70.99
+0001 biscuits 45.50
+0002 bread 20.75
+0003 dumplings 287.99
+0004 carrot 10.25
+0005 salad 60.20
+0006 sweets 80.10
+0007 meat 490.01
+0008 drill 3450.991
+0009 corn flakes 89.68
+0010 garden rake 600.00 

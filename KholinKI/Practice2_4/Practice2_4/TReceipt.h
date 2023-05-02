@@ -1,29 +1,18 @@
 #pragma once
-#ifndef TRECEIPT_H
-#define TRECEIPT_H
+#ifndef _TRECEIPT_H
+#define _TRECEIPT_H
 
 
 #include "TContainer.h"
 #include "TRecipline.h"
 
-
-
-
-
 class TReceipt {
-public:
+private:
 	long index;							
 	TDate* date;
 	TTime* time;
-	TContainer<TRecipline>* products;
-
-
-	TReceipt();//create data and time for check:set default
-
-
-	void changer();//redactor of check
-	void find_product();//search
-	void calculate_cost();//total cost purchase
+	TContainer* products;
+public:
 };
 
 
