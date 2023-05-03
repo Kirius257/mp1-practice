@@ -18,10 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Impl.cpp">
+    <ClCompile Include="Constructors.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="DataTime.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Realization.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,6 +39,18 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="TContainer.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="product_base.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="description_base.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>

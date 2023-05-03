@@ -14,16 +14,26 @@ using namespace std;
 
 typedef TRecipline elements;
 
-enum class FileExeption { NullPtrFile = -1 };
 class TContainer {
 private:
 	int size;
 	elements* element;
 	int max_size;
 	int step;
+	void realloc();
 public:
+	TContainer(void);
 	TContainer(int max_size, int step);
-	void file_reader(ifstream& file);
+	//йнмярпсйрнп йнохпнбюмхъ дкъ оепеоюйнбйх ячдю
+	//деярпсйрнп дкъ нябнанфдемхъ оюлърх хг-онд element
+
+
+	void insert();//оюпюлерпш?
+
+	void increase_size() { size++; }
+	int get_size() { return size; }
+	int get_max_size() { return max_size; }
+	
 };
 
 #endif

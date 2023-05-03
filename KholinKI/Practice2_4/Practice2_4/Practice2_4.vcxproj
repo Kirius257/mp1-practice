@@ -141,11 +141,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataTime.cpp" />
-    <ClCompile Include="Impl.cpp" />
+    <ClCompile Include="Constructors.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Realization.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="description_base.h" />
+    <ClInclude Include="product_base.h" />
     <ClInclude Include="TContainer.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="TProduct.h" />
     <ClInclude Include="TReceipt.h" />
     <ClInclude Include="TRecipline.h" />

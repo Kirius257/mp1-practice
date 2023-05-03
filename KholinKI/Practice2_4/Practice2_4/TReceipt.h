@@ -2,9 +2,10 @@
 #ifndef _TRECEIPT_H
 #define _TRECEIPT_H
 
-
+#include "Date.h"
+#include "Time.h"
 #include "TContainer.h"
-#include "TRecipline.h"
+
 
 class TReceipt {
 private:
@@ -16,17 +17,6 @@ public:
 };
 
 
-class TDate {
-public:
-	int year;
-	int month;
-	int day;
-};
 
-class TTime {
-public:
-	int hour;
-	int minute;
-	int second;
-};
+
 #endif
