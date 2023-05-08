@@ -2,18 +2,23 @@
 #ifndef _TRECEIPT_H
 #define _TRECEIPT_H
 
+#include <chrono>
 #include "Date.h"
 #include "Time.h"
 #include "TContainer.h"
 
-
+enum class FileExeption { NullPtrFile = -1 };
 class TReceipt {
 private:
+	int num_conts;
 	long index;							
 	TDate* date;
 	TTime* time;
-	TContainer* products;
+	TContainer** products;
 public:
+	TReceipt(void);
+	TReceipt(int num_c,const string& path);
+
 };
 
 

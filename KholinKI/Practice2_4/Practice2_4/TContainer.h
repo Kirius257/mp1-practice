@@ -16,24 +16,25 @@ typedef TRecipline elements;
 
 class TContainer {
 private:
-	int size;
-	elements* element;
+	int count;
+	elements** element;
 	int max_size;
 	int step;
-	void realloc();
+	//void realloc();
 public:
 	TContainer(void);
 	TContainer(int max_size, int step);
+
+	TContainer(const string& path);
+	//TContainer(int count); äëÿ êîíòåéíåğà-îğèãèíàëà
+	//
+
+
+	//void insert_end();
+	
 	//ÊÎÍÑÒĞÓÊÒÎĞ ÊÎÏÈĞÎÂÀÍÈß ÄËß ÏÅĞÅÏÀÊÎÂÊÈ ÑŞÄÀ
 	//ÄÅÑÒĞÓÊÒÎĞ ÄËß ÎÑÂÎÁÎÆÄÅÍÈß ÏÀÌßÒÈ ÈÇ-ÏÎÄ element
 
-
-	void insert();//ÏÀĞÀÌÅÒĞÛ?
-
-	void increase_size() { size++; }
-	int get_size() { return size; }
-	int get_max_size() { return max_size; }
-	
 };
 
 #endif

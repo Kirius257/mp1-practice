@@ -4,10 +4,13 @@
 
 #include <string>
 
-class TProduct {
-public:
+
+
+struct TProduct {
 	long code;
 	std::string name;
 	double cost;
+
+	TProduct(void);
 };
 #endif

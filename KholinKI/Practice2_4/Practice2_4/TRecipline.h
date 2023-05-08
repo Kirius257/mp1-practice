@@ -4,9 +4,12 @@
 #include "TProduct.h"
 
 class TRecipline {
-public:
+private:
 	int num;
 	double sum;
 	TProduct* product;
+public:
+	TRecipline(void);
+	TRecipline(int num_, long code_, std::string name_, double cost_);
 };
 #endif
