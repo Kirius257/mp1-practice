@@ -22,15 +22,15 @@ private:
 	int step;
 	//void realloc();
 public:
-	TContainer(void);
 	TContainer(int max_size, int step);
 
-	TContainer(const string& path);
+	void get_data_base(const string& path,long& index);
 	//TContainer(int count); äëÿ êîíòåéíåğà-îğèãèíàëà
 	//
 
-
-	//void insert_end();
+	void next(long& index);
+	void back(long& index);
+	void insert_end(const TProduct& obj,long& index)
 	
 	//ÊÎÍÑÒĞÓÊÒÎĞ ÊÎÏÈĞÎÂÀÍÈß ÄËß ÏÅĞÅÏÀÊÎÂÊÈ ÑŞÄÀ
 	//ÄÅÑÒĞÓÊÒÎĞ ÄËß ÎÑÂÎÁÎÆÄÅÍÈß ÏÀÌßÒÈ ÈÇ-ÏÎÄ element

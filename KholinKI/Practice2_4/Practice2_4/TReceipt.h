@@ -16,9 +16,10 @@ private:
 	TTime* time;
 	TContainer** products;
 public:
-	TReceipt(void);
 	TReceipt(int num_c,const string& path);
 
+	
+	//void add_product(const TProduct& obj);
 };
 
 

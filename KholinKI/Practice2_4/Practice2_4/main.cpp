@@ -9,6 +9,7 @@ using namespace std;
 
 int main() {
 	const string path = "C://product_base.txt";
-	TReceipt check(NUM_CONTAINERS,path);
+	TReceipt check(NUM_CONTAINERS);
+	
 	return 0;
 }

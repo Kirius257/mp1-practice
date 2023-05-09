@@ -12,5 +12,6 @@ struct TProduct {
 	double cost;
 
 	TProduct(void);
+	TProduct(long code_, std::string name_, double cost_);
 };
 #endif

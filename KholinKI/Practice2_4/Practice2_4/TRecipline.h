@@ -10,6 +10,8 @@ private:
 	TProduct* product;
 public:
 	TRecipline(void);
-	TRecipline(int num_, long code_, std::string name_, double cost_);
+	TRecipline(int num_);
+
+	bool check_end();
 };
 #endif
