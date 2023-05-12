@@ -8,33 +8,55 @@
 
 using namespace std;
 
-void TContainer::next(long& index) {
-	index++;
-}
-
-void TContainer::back(long& index) {
-	index--;
-}
-
-
-void TContainer::insert_end(const TProduct& obj,long& index) {
-	//проверка на переполнение;realloc() здесь
-	if (element[index]->check_end() || index == max_size - 1) {
-		back(index);
-
+void TContainer::end() {
+	int tmp_i = 0;
+	tmp_i = max_size - count - 1;
+	if (tmp_i < 0) {
+		pos = -1;
 	}
-	//на i-той вставке проконтролировать заполнение
-	else next(index);
-}
-
-bool TRecipline::check_end() {//додумать,как правильно найти конец
-	if (product != nullptr) {
-		return true;
+	while (pos < tmp_i)
+	{
+		next();
 	}
-	else return false;
+	if (pos > tmp_i && (pos - tmp_i) == 1) {
+		pos = tmp_i;
+	}
 }
 
-void TContainer::get_data_base(const string& path,long& index) {
+void TContainer::next() {
+	pos++;
+}
+
+void TContainer::reset() {
+	pos = 0;
+}
+
+void TContainer::realloc() {
+	max_size += step;
+	elements* tmp_element = new elements[max_size];
+	for (int i = 0; i < count; i++)
+		tmp_element[i] = element[i];
+	delete[] element;
+	element = tmp_element;
+}
+
+
+
+void TContainer::insert_end(const TProduct& obj) {
+	end();
+
+	if (pos < 0) {
+		realloc();
+		reset();
+		end();
+	}
+	element[pos].product = new TProduct(obj.code, obj.name, obj.cost);//конструктор копирования,может быть?
+	count++;
+}
+
+
+
+void TContainer::get_data_base(const string& path) {
 	try {
 		ifstream file(path);
 		if (file.is_open() == 0) {
@@ -42,35 +64,26 @@ void TContainer::get_data_base(const string& path,long& index) {
 			throw ex;
 		}
 
-		file >> count;
-		//проверка на переполнение
+		int k;
+		file >> k;
 		int num_;
 		long code_;
 		string name_;
 		double cost_;
 		
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < k; i++) {
 			file >> num_ >> code_ >> name_ >> cost_;
-			element[i] = new elements(num_);
 			TProduct tmp(code_,name_,cost_);
-			insert_end(tmp,index);
+			insert_end(tmp);
+			element[pos].num = num_;//количество сделать 0,мы считаем его в структуру pair(из библиотеки)
+			
 		}
-		
 		file.close();
 	}
 	catch (FileExeption ex) {
 		cout << "Check that the file path is correct! Programm is over with code " << static_cast<int>(ex) << endl;
 	}
 }
-
-//void TContainer::insert_end() {
-//	int pos = max_size-1;
-//	if(element[pos] )
-//}
-//отталкиваться от pos и через цикл найти свободное место.
-
-
-
 
 //int product_base::scanner1_0(long& code) {
 //	for (int i = 0; i < count; i++) {
@@ -81,12 +94,6 @@ void TContainer::get_data_base(const string& path,long& index) {
 //	return 0;
 //}
 
-//void TContainer::realloc() {
 
-//}
 
-//void TContainer::insert() {
-//	//if (size > max_size) realloc();
-//	
-//	increase_size();
-//}
+

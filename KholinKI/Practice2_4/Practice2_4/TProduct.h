@@ -13,5 +13,6 @@ struct TProduct {
 
 	TProduct(void);
 	TProduct(long code_, std::string name_, double cost_);
+	TProduct(const TProduct& obj);
 };
 #endif

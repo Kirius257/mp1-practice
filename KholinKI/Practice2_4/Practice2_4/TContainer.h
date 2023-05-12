@@ -16,21 +16,23 @@ typedef TRecipline elements;
 
 class TContainer {
 private:
+	int pos;
 	int count;
-	elements** element;
+	elements* element;
 	int max_size;
 	int step;
-	//void realloc();
+	void realloc();
 public:
 	TContainer(int max_size, int step);
 
-	void get_data_base(const string& path,long& index);
+	void get_data_base(const string& path);
 	//TContainer(int count); äëÿ êîíòåéíåğà-îğèãèíàëà
 	//
 
-	void next(long& index);
-	void back(long& index);
-	void insert_end(const TProduct& obj,long& index)
+	void next();
+	void reset();
+	void end();
+	void insert_end(const TProduct& obj);
 	
 	//ÊÎÍÑÒĞÓÊÒÎĞ ÊÎÏÈĞÎÂÀÍÈß ÄËß ÏÅĞÅÏÀÊÎÂÊÈ ÑŞÄÀ
 	//ÄÅÑÒĞÓÊÒÎĞ ÄËß ÎÑÂÎÁÎÆÄÅÍÈß ÏÀÌßÒÈ ÈÇ-ÏÎÄ element

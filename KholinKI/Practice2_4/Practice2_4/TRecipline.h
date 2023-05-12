@@ -3,15 +3,12 @@
 #define TRECIPLINE_H
 #include "TProduct.h"
 
-class TRecipline {
-private:
+struct TRecipline {
 	int num;
 	double sum;
 	TProduct* product;
-public:
-	TRecipline(void);
-	TRecipline(int num_);
 
-	bool check_end();
+	TRecipline(void);
+	TRecipline(const TRecipline& obj);
 };
 #endif

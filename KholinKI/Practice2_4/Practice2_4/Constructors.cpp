@@ -7,7 +7,6 @@ using namespace std;
 
 
 
-
 TRecipline::TRecipline(void) {
 	num = 0;
 	sum = 0;
@@ -25,19 +24,23 @@ TReceipt::TReceipt(int num_c,const string& path) {
 	num_conts = num_c;
 	products = new TContainer *[num_conts];
 	for (int i = 0; i < num_conts; i++) {
-		products[i] = new TContainer();
+		products[i] = new TContainer(100,10);
 	}
 	
 //#create product base
-	products[0]->get_data_base(path,index);
+	products[0]->get_data_base(path);
 }
 
 
-TContainer::TContainer(int max_size = 100, int step = 10) {
-		this->max_size = max_size;
-		this->step = step;
-		element = new elements*[this->max_size];
+TContainer::TContainer(int max_size, int step) {
+	pos = 0;
+	count = 0,
+	
+	this->max_size = max_size;
+	this->step = step;
+		element = new elements[this->max_size];
 }
+
 
 TProduct::TProduct(long code_, std::string name_, double cost_) {
 	code = code_;
@@ -45,9 +48,18 @@ TProduct::TProduct(long code_, std::string name_, double cost_) {
 	cost = cost_;
 }
 
-TRecipline::TRecipline(int num_) {
-	num = num_;
+
+TRecipline::TRecipline(const TRecipline& obj) {
+	num = obj.num;
+	product = new TProduct(*(obj.product));
 }
+
+TProduct::TProduct(const TProduct& obj) {
+	code = obj.code;
+	name = obj.name;
+	cost = obj.cost;
+}
+
 
 
 
