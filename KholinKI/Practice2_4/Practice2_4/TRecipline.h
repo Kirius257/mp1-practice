@@ -3,6 +3,8 @@
 #define TRECIPLINE_H
 #include "TProduct.h"
 
+
+
 struct TRecipline {
 	int num;
 	double sum;
@@ -11,4 +13,5 @@ struct TRecipline {
 	TRecipline(void);
 	TRecipline(const TRecipline& obj);
 };
+
 #endif

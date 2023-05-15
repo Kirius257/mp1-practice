@@ -6,8 +6,9 @@
 struct Pair {
 	TProduct* product;
 	int num;
-
-	Pair(int _num, const TProduct& obj);
+	
+	Pair(void);
+	Pair(int num_,long code_,std::string name_,double cost_);
 };
 
 #endif

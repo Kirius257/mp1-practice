@@ -21,7 +21,13 @@
     <ClCompile Include="Constructors.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Impl.cpp">
+    <ClCompile Include="Pair.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Product.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="TRecipline.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

@@ -142,7 +142,9 @@
   <ItemGroup>
     <ClCompile Include="Constructors.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Impl.cpp" />
+    <ClCompile Include="Pair.cpp" />
+    <ClCompile Include="Product.cpp" />
+    <ClCompile Include="TRecipline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
