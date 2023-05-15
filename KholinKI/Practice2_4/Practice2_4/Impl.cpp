@@ -1,26 +1,32 @@
 #include "TReceipt.h"
-
+#include "Pair.h"
 
 #include <fstream>
 #include <iostream>
 //#1 BASE OF PRODUCTS
 //#2 CONTAINER
 
+
 using namespace std;
 
 void TContainer::end() {
-	int tmp_i = 0;
-	tmp_i = max_size - count - 1;
-	if (tmp_i < 0) {
-		pos = -1;
-	}
-	while (pos < tmp_i)
-	{
+	
+	while (check_pos() == 0) {
 		next();
 	}
-	if (pos > tmp_i && (pos - tmp_i) == 1) {
-		pos = tmp_i;
+	
+}
+
+int TContainer::check_pos() {
+	int def1=0;
+	if (element[pos].product == nullptr && element[pos + 1].product != nullptr) { def1 = 1; return def1; }
+	int def2=0;
+	if (element[pos].product == nullptr && element[pos - 1].product != nullptr && (pos-1) > 0) { def2 = 1; return def2; }
+	if (def1 == 1 && def2 == 1) {
+		int def3 = true;
+		return def3;
 	}
+	return 0;
 }
 
 void TContainer::next() {
@@ -34,8 +40,7 @@ void TContainer::reset() {
 void TContainer::realloc() {
 	max_size += step;
 	elements* tmp_element = new elements[max_size];
-	for (int i = 0; i < count; i++)
-		tmp_element[i] = element[i];
+	for (int i = 0; i < count; i++) { tmp_element[i] = element[i]; }
 	delete[] element;
 	element = tmp_element;
 }
@@ -43,18 +48,18 @@ void TContainer::realloc() {
 
 
 void TContainer::insert_end(const TProduct& obj) {
-	end();
-
-	if (pos < 0) {
+	if (max_size == count) {
 		realloc();
 		reset();
-		end();
 	}
+	end();
 	element[pos].product = new TProduct(obj.code, obj.name, obj.cost);//конструктор копирования,может быть?
 	count++;
 }
 
-
+void TContainer::create_pair() {
+	
+}
 
 void TContainer::get_data_base(const string& path) {
 	try {
@@ -71,12 +76,13 @@ void TContainer::get_data_base(const string& path) {
 		string name_;
 		double cost_;
 		
+		
 		for (int i = 0; i < k; i++) {
 			file >> num_ >> code_ >> name_ >> cost_;
 			TProduct tmp(code_,name_,cost_);
 			insert_end(tmp);
-			element[pos].num = num_;//количество сделать 0,мы считаем его в структуру pair(из библиотеки)
-			
+			element[pos].num = num_;
+			reset();
 		}
 		file.close();
 	}

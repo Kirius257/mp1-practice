@@ -7,6 +7,7 @@
 #include "Time.h"
 #include "TContainer.h"
 
+
 enum class FileExeption { NullPtrFile = -1 };
 class TReceipt {
 private:
@@ -17,7 +18,8 @@ private:
 	TContainer** products;
 public:
 	TReceipt(int num_c,const string& path);
-
+	
+	
 	
 	//void add_product(const TProduct& obj);
 };

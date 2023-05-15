@@ -26,12 +26,11 @@ public:
 	TContainer(int max_size, int step);
 
 	void get_data_base(const string& path);
-	//TContainer(int count); äëÿ êîíòåéíåğà-îğèãèíàëà
-	//
 
 	void next();
 	void reset();
 	void end();
+	int check_pos();
 	void insert_end(const TProduct& obj);
 	
 	//ÊÎÍÑÒĞÓÊÒÎĞ ÊÎÏÈĞÎÂÀÍÈß ÄËß ÏÅĞÅÏÀÊÎÂÊÈ ÑŞÄÀ

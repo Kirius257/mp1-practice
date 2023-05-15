@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "TReceipt.h"
+#include "Pair.h"
 
 
 using namespace std;
@@ -24,7 +25,7 @@ TReceipt::TReceipt(int num_c,const string& path) {
 	num_conts = num_c;
 	products = new TContainer *[num_conts];
 	for (int i = 0; i < num_conts; i++) {
-		products[i] = new TContainer(100,10);
+		products[i] = new TContainer(3,10);
 	}
 	
 //#create product base
@@ -46,6 +47,11 @@ TProduct::TProduct(long code_, std::string name_, double cost_) {
 	code = code_;
 	name = name_;
 	cost = cost_;
+}
+
+Pair::Pair(int _num, const TProduct& obj) {
+	num = _num;
+
 }
 
 

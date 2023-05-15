@@ -44,5 +44,8 @@
     <ClInclude Include="Time.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Pair.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
