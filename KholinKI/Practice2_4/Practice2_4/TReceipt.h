@@ -2,17 +2,18 @@
 #ifndef _TRECEIPT_H
 #define _TRECEIPT_H
 
-
+#include "Container.h"
+#include "TRecipline.h"
 #include "Date.h"
 #include "Time.h"
-#include "TContainer.h"
+#include "Pair.h"
 
 
 
 template <class T>
 class TReceipt {
 private:
-	long index;							
+	long index;
 	TDate* date;
 	TTime* time;
 	TContainer<T>* products;
@@ -26,7 +27,5 @@ TReceipt<T>::TReceipt(void) {
 	//#Creating containers
 	products = new TContainer<T>(3, 10);
 }
-
-
 
 #endif

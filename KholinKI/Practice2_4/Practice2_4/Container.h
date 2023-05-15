@@ -2,13 +2,8 @@
 #ifndef _TCONTAINER_H
 #define _TCONTAINER_H
 #include "TReceipt.h"
-#include "TRecipline.h"
 #include "Pair.h"
-#include <fstream>
-#include <iostream>
 #include <string>
-
-
 
 
 using namespace std;
@@ -22,7 +17,7 @@ using namespace std;
 enum class Exeption { NullPtrFile = -1, IndexLimitError = -2 };
 template <class T>
 class TContainer {
-//#SYSTEM FIELDS
+	//#SYSTEM FIELDS
 private:
 	int pos;
 	int count;
@@ -34,11 +29,9 @@ public:
 	//#CONSTRUCTORS && DESTRUCTORS
 	TContainer(void);
 	TContainer(int max_size, int step);
+	TContainer(const string& path);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
-
-	//#DATA
-	TContainer create_data_base(const string& path);
 
 	//#ITERATOR TOOLS
 	void end();
@@ -49,14 +42,12 @@ public:
 	//#OPERATORS CONTAINER
 	T& operator[](int index);
 	void insert_end(const T& obj);
-	
+	TContainer& operator=(const TContainer<T>& obj);
+
 
 
 
 };
-
-
-
 
 template <class T>
 TContainer<T>::TContainer() {
@@ -74,9 +65,19 @@ TContainer<T>::TContainer(int max_size, int step) {
 	pos = 0;
 	count = 0,
 
-	this->max_size = max_size;
+		this->max_size = max_size;
 	this->step = step;
 	element = new T[this->max_size];
+}
+
+template <class T>
+TContainer<T>::TContainer(const TContainer<T>& obj) {
+	max_size = obj.max_size;
+	count = obj.count;
+	element = new T[max_size];
+	for (int i = 0; i < count; i++){
+		element[i] = obj.element[i];
+	}
 }
 
 
@@ -150,7 +151,22 @@ T& TContainer<T>::operator[](int index) {
 }
 
 template <class T>
-TContainer<T> TContainer<T>::create_data_base(const string& path) {
+TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj) 
+{
+	if (this != &obj) {
+		delete[] element;
+		size = obj.size;
+		count = obj.count;
+		element = new T[size];
+		for (int i = 0; i < count; i++)
+			element[i] = obj.element[i];
+	}
+	return *this;
+}
+
+
+template <class T>
+TContainer<T>::TContainer(const string& path) {
 	try {
 		ifstream file(path);
 		if (file.is_open() == 0) {
@@ -158,24 +174,27 @@ TContainer<T> TContainer<T>::create_data_base(const string& path) {
 			throw ex;
 		}
 
+		pos = 0;
+		count = 0,
+
+			this->max_size = max_size;
+		this->step = step;
+		element = new T[this->max_size];
+
 		int k;
 		file >> k;
 		int num_;
 		long code_;
-		string name_;
+		std::string name_;
 		double cost_;
-
-		TContainer my_base(3, 10);
 
 		for (int i = 0; i < k; i++) {
 			file >> num_ >> code_ >> name_ >> cost_;
-			T tmp(num_,code_, name_, cost_);
+			T tmp(num_, code_, name_, cost_);
 			insert_end(tmp);
-			element[pos].num = num_;
 			reset();
 		}
 		file.close();
-		return my_base;
 	}
 	catch (Exeption ex) {
 		cout << "Check that the file path is correct! Programm is over with code " << static_cast<int>(ex) << endl;

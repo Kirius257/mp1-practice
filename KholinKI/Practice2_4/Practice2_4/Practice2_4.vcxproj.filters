@@ -18,16 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Constructors.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Pair.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Product.cpp">
+    <ClCompile Include="TProduct.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="TRecipline.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Pair.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,19 +32,19 @@
     <ClInclude Include="TReceipt.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="TProduct.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="TRecipline.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="TContainer.h">
+    <ClInclude Include="Container.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Date.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TRecipline.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TProduct.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Pair.h">
