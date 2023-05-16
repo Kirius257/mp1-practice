@@ -20,3 +20,4 @@ TProduct::TProduct(const TProduct& obj) {
 	name = obj.name;
 	cost = obj.cost;
 }
+

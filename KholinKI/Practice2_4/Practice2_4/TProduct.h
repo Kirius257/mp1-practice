@@ -1,12 +1,13 @@
 #pragma once
-#ifndef _TPRODUCT_H
-#define _TPRODUCT_H
+#ifndef TPRODUCT_H
+#define TPRODUCT_H
 
 #include <string>
 
 
 
 struct TProduct {
+
 	long code;
 	std::string name;
 	double cost;

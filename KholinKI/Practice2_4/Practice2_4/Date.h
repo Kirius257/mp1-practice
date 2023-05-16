@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _DATE_H
-#define _DATE_H
+#ifndef DATE_H
+#define DATE_H
 
 class TDate {
 public:

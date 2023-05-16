@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _TIME_H
-#define _TIME_H
+#ifndef TIME_H
+#define TIME_H
 
 
 class TTime {

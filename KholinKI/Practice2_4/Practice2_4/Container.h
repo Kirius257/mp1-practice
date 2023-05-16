@@ -1,8 +1,9 @@
 #pragma once
-#ifndef _TCONTAINER_H
-#define _TCONTAINER_H
-#include "TReceipt.h"
+#ifndef CONTAINER_H
+#define CONTAINER_H
+
 #include "Pair.h"
+#include "TRecipline.h"
 #include <string>
 
 
@@ -29,7 +30,7 @@ public:
 	//#CONSTRUCTORS && DESTRUCTORS
 	TContainer(void);
 	TContainer(int max_size, int step);
-	TContainer(const string& path);
+	TContainer(int max_size, int step, const string& path);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
 
@@ -42,6 +43,10 @@ public:
 	//#OPERATORS CONTAINER
 	T& operator[](int index);
 	void insert_end(const T& obj);
+	void remove(int index);
+	
+
+	//#HELPER-OPERATORS
 	TContainer& operator=(const TContainer<T>& obj);
 
 
@@ -65,7 +70,7 @@ TContainer<T>::TContainer(int max_size, int step) {
 	pos = 0;
 	count = 0,
 
-		this->max_size = max_size;
+	this->max_size = max_size;
 	this->step = step;
 	element = new T[this->max_size];
 }
@@ -83,10 +88,14 @@ TContainer<T>::TContainer(const TContainer<T>& obj) {
 
 template <class T>
 TContainer<T>::~TContainer() {
-	delete[] element;
-	max_size = 0;
-	count = 0;
-	element = nullptr;
+	if (count > 0) {
+		if (element != nullptr) {
+			delete[] element;
+		}
+		max_size = 0;
+		count = 0;
+		element = nullptr;
+	}
 }
 
 template <class T>
@@ -110,6 +119,7 @@ int TContainer<T>::check_pos() {
 	}
 	return 0;
 }
+
 template <class T>
 void TContainer<T>::next() {
 	pos++;
@@ -125,9 +135,9 @@ void TContainer<T>::realloc() {
 	max_size += step;
 	T* tmp_element = new T[max_size];
 	for (int i = 0; i < count; i++) { tmp_element[i] = element[i]; }
-	delete[] element;
 	element = tmp_element;
 }
+
 
 
 template <class T>
@@ -137,9 +147,20 @@ void TContainer<T>::insert_end(const T& obj) {
 		reset();
 	}
 	end();
-	element[pos].product = new TProduct(obj.product->code, obj.product->name, obj.product->cost);//конструктор копирования,может быть?
+	element[pos].num = obj.num;
+	element[pos].product = new TProduct(*(obj.product));
 	count++;
 }
+
+template <class T>
+void TContainer<T>::remove(int index)
+{
+	if (index > -1 && index < count)
+		for (int i = index; i < count - 1; i++)
+			element[i] = element[i + 1];
+	count--;
+}
+
 
 template <class T>
 T& TContainer<T>::operator[](int index) {
@@ -166,7 +187,7 @@ TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 
 
 template <class T>
-TContainer<T>::TContainer(const string& path) {
+TContainer<T>::TContainer(int max_size, int step, const string& path) {
 	try {
 		ifstream file(path);
 		if (file.is_open() == 0) {
@@ -175,19 +196,21 @@ TContainer<T>::TContainer(const string& path) {
 		}
 
 		pos = 0;
-		count = 0,
-
-			this->max_size = max_size;
+		count = 0;
+		this->max_size = max_size;
 		this->step = step;
+
 		element = new T[this->max_size];
 
 		int k;
 		file >> k;
+
 		int num_;
 		long code_;
-		std::string name_;
+		string name_;
 		double cost_;
 
+		
 		for (int i = 0; i < k; i++) {
 			file >> num_ >> code_ >> name_ >> cost_;
 			T tmp(num_, code_, name_, cost_);
@@ -195,6 +218,7 @@ TContainer<T>::TContainer(const string& path) {
 			reset();
 		}
 		file.close();
+		
 	}
 	catch (Exeption ex) {
 		cout << "Check that the file path is correct! Programm is over with code " << static_cast<int>(ex) << endl;

@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TReceipt.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="Container.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Pair.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TReceipt.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
