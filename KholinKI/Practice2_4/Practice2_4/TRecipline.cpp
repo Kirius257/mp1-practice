@@ -24,7 +24,7 @@ TRecipline::TRecipline(const TRecipline& obj) {
 
 TRecipline::~TRecipline() {
 	if (product != nullptr) {
-		delete[] product;
+		delete product;
 		product = nullptr;
 	}
 }
