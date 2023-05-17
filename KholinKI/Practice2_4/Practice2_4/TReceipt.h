@@ -7,27 +7,33 @@
 #include "Date.h"
 #include "Time.h"
 
-
+#define MAX_SIZE 3
+#define STEP 10
 
 
 class TReceipt {
 private:
-	int num_conts;
 	long index;
 	TDate* date;
 	TTime* time;
 	TContainer<TRecipline>* products;
+	TContainer<Pair>* my_base;
 public:
-	TReceipt(int num_conts);
+	TReceipt(int max_size,int step,const string& path);
 	
+	//#SCANNERS
+	TRecipline search_product_B(long code_);
+	TRecipline search_product_C(long code_);
+
+	//#ADD
+	void add_product(const TRecipline& obj);
+
+	//#CHANGE
+	void change_Cline(const TRecipline& obj);
 };
 
 
-TReceipt::TReceipt(int num_conts_) {
-	//#Creating containers
-	index = 0;
-	int num_conts = num_conts_;
-	products = new TContainer<TRecipline>(3, 10);
-}
+
+
 
 #endif

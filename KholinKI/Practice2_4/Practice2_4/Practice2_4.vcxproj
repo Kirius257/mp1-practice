@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pair.cpp" />
     <ClCompile Include="TProduct.cpp" />
+    <ClCompile Include="TReciept.cpp" />
     <ClCompile Include="TRecipline.cpp" />
   </ItemGroup>
   <ItemGroup>

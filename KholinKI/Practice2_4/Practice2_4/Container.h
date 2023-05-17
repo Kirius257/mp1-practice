@@ -5,6 +5,8 @@
 #include "Pair.h"
 #include "TRecipline.h"
 #include <string>
+#include <iostream>
+#include <fstream>
 
 
 using namespace std;
@@ -30,7 +32,7 @@ public:
 	//#CONSTRUCTORS && DESTRUCTORS
 	TContainer(void);
 	TContainer(int max_size, int step);
-	TContainer(int max_size, int step, const string& path);
+	TContainer(int max_size, int step, const std::string& path);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
 
@@ -42,20 +44,22 @@ public:
 
 	//#OPERATORS CONTAINER
 	T& operator[](int index);
+	TContainer& operator=(const TContainer<T>& obj);
 	void insert_end(const T& obj);
 	void remove(int index);
 	
-
-	//#HELPER-OPERATORS
-	TContainer& operator=(const TContainer<T>& obj);
-
-
-
-
+	//#METHODS OF WORKING WITH ELEMENT FIELDS
+	T find(long code_value);
+	int  find(const T& elem) const;
+	
 };
 
+
+
+
+
 template <class T>
-TContainer<T>::TContainer() {
+TContainer<T>::TContainer(void) {
 	pos = 0;
 	count = 0;
 	element = nullptr;
@@ -63,17 +67,16 @@ TContainer<T>::TContainer() {
 	step = 0;
 }
 
-
-
 template <class T>
-TContainer<T>::TContainer(int max_size, int step) {
+TContainer<T>::TContainer(int max_size,int step) {
 	pos = 0;
-	count = 0,
+	count = 0;
+	this->max_size = 100;
+	this->step = 10;
 
-	this->max_size = max_size;
-	this->step = step;
 	element = new T[this->max_size];
 }
+
 
 template <class T>
 TContainer<T>::TContainer(const TContainer<T>& obj) {
@@ -150,6 +153,18 @@ void TContainer<T>::insert_end(const T& obj) {
 	element[pos].num = obj.num;
 	element[pos].product = new TProduct(*(obj.product));
 	count++;
+	reset();
+}
+
+template <class T>//method find by code value
+T TContainer<T>::find(long code_value) {
+	for (pos = 0; pos < count; next())
+	{
+		if (element[pos].product->code == code_value) { 
+			return element[pos];
+		}
+	}
+	return T();
 }
 
 template <class T>
@@ -187,7 +202,7 @@ TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 
 
 template <class T>
-TContainer<T>::TContainer(int max_size, int step, const string& path) {
+TContainer<T>::TContainer(int max_size,int step,const std::string& path) {
 	try {
 		ifstream file(path);
 		if (file.is_open() == 0) {
@@ -200,14 +215,14 @@ TContainer<T>::TContainer(int max_size, int step, const string& path) {
 		this->max_size = max_size;
 		this->step = step;
 
-		element = new T[this->max_size];
+		element = new T[max_size];
 
 		int k;
 		file >> k;
 
 		int num_;
 		long code_;
-		string name_;
+		std::string name_;
 		double cost_;
 
 		
@@ -215,7 +230,6 @@ TContainer<T>::TContainer(int max_size, int step, const string& path) {
 			file >> num_ >> code_ >> name_ >> cost_;
 			T tmp(num_, code_, name_, cost_);
 			insert_end(tmp);
-			reset();
 		}
 		file.close();
 		
@@ -223,6 +237,16 @@ TContainer<T>::TContainer(int max_size, int step, const string& path) {
 	catch (Exeption ex) {
 		cout << "Check that the file path is correct! Programm is over with code " << static_cast<int>(ex) << endl;
 	}
+}
+
+template <class T>
+int TContainer<T>::find(const T& elem) const {
+	int nom = -1;
+	int i = 0;
+	while (i < count && nom == -1) {
+		if (element[i] == elem) nom = i; else i++;
+	}
+	return nom;
 }
 
 #endif

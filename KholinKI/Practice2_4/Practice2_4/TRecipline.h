@@ -15,6 +15,7 @@ struct TRecipline {
 	TRecipline(const TRecipline& obj);
 	~TRecipline();
 
+
 };
 
 #endif

@@ -14,6 +14,8 @@ using namespace std;
 	Pair(int num_, long code_, string name_, double cost_);
 	Pair(const Pair& obj);
 	~Pair();
+
+
 };
 
 #endif
