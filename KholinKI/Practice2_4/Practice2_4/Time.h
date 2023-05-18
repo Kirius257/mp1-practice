@@ -3,7 +3,7 @@
 #define TIME_H
 
 
-class TTime {
+class TTime {//struct
 public:
 	int hour;
 	int minute;

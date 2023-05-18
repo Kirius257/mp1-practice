@@ -14,10 +14,10 @@
 class TReceipt {
 private:
 	long index;
-	TDate* date;
-	TTime* time;
-	TContainer<TRecipline>* products;
-	TContainer<Pair>* my_base;
+	TDate date;
+	TTime time;
+	TContainer<TRecipline> products;
+	TContainer<Pair> my_base;
 public:
 	TReceipt(int max_size,int step,const string& path);
 	

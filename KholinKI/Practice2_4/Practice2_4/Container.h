@@ -30,26 +30,30 @@ private:
 	void realloc();
 public:
 	//#CONSTRUCTORS && DESTRUCTORS
-	TContainer(void);
-	TContainer(int max_size, int step);
-	TContainer(int max_size, int step, const std::string& path);
+///	TContainer(void);
+	TContainer(int max_size = 10, int step = 5);
+////	TContainer(int max_size, int step, const std::string& path);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
 
 	//#ITERATOR TOOLS
-	void end();
+	bool is_ended() const;
+///	void end();
 	void next();
 	void reset();
-	int check_pos();
+///	int check_pos();
 
 	//#OPERATORS CONTAINER
 	T& operator[](int index);
-	TContainer& operator=(const TContainer<T>& obj);
-	void insert_end(const T& obj);
+	const TContainer& operator=(const TContainer<T>& obj);
+	void push(const T& obj);
+	void insert(int index);
+	void insert_before(const T& obj);
+	void insert_after(const T& obj);
 	void remove(int index);
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
-	T find(long code_value);
+///	T find(long code_value) const;
 	int  find(const T& elem) const;
 	
 };
@@ -157,7 +161,7 @@ void TContainer<T>::insert_end(const T& obj) {
 }
 
 template <class T>//method find by code value
-T TContainer<T>::find(long code_value) {
+T TContainer<T>::find(long code_value) const{
 	for (pos = 0; pos < count; next())
 	{
 		if (element[pos].product->code == code_value) { 

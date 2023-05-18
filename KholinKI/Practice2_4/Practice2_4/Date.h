@@ -2,7 +2,7 @@
 #ifndef DATE_H
 #define DATE_H
 
-class TDate {
+class TDate {//struct
 public:
 	int year;
 	int month;

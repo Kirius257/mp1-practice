@@ -6,8 +6,9 @@
 
 
 
-struct TProduct {
+struct TProduct {//class
 
+	// private fields
 	long code;
 	std::string name;
 	double cost;
