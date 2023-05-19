@@ -6,13 +6,12 @@
 
 
 
-struct TProduct {//class
-
-	// private fields
+class TProduct {
+private:
 	long code;
 	std::string name;
 	double cost;
-
+public:
 	TProduct(void);
 	TProduct(long code_, std::string name_, double cost_);
 	TProduct(const TProduct& obj);

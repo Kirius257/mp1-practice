@@ -12,19 +12,13 @@ TRecipline::TRecipline(void) {
 	product = nullptr;
 }
 
-TRecipline::TRecipline(int num_, long code_, std::string name_, double cost_) {
+TRecipline::TRecipline(TProduct product_,int num_, long code_, std::string name_, double cost_) {
 	num = num_;
-	product = new TProduct(code_, name_, cost_);
+	product = product_;
 }
 
 TRecipline::TRecipline(const TRecipline& obj) {
 	num = obj.num;
-	product = new TProduct(*(obj.product));
+	product = obj.product;
 }
 
-TRecipline::~TRecipline() {
-	if (product != nullptr) {
-		delete product;
-		product = nullptr;
-	}
-}

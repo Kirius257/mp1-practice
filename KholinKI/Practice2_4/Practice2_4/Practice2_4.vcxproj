@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pair.cpp" />
     <ClCompile Include="TProduct.cpp" />
     <ClCompile Include="TReciept.cpp" />
     <ClCompile Include="TRecipline.cpp" />
@@ -149,7 +148,6 @@
   <ItemGroup>
     <ClInclude Include="Container.h" />
     <ClInclude Include="Date.h" />
-    <ClInclude Include="Pair.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TProduct.h" />
     <ClInclude Include="TReceipt.h" />

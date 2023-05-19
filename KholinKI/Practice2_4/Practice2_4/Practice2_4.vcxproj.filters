@@ -24,9 +24,6 @@
     <ClCompile Include="TRecipline.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Pair.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="TReciept.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="TProduct.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Pair.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="TReceipt.h">

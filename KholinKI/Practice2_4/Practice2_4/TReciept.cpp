@@ -1,32 +1,45 @@
 #include "TReceipt.h"
 
-TReceipt::TReceipt(int max_size,int step,const string& path) {
-	//#Creating containers
+
+TReceipt::TReceipt(void){
 	index = 0;
-	products = new TContainer<TRecipline>(max_size,step);
-	my_base = new TContainer<Pair>(max_size, step,path);
 	
 }
 
+void TReceipt::file_reader(const string& path) {
+	try
+	{
+		ifstream file(path);
+		if (file.is_open() == 0) {
+			Exeption ex = Exeption::NullPtrFile;
+			throw ex;
+		}
 
-TRecipline TReceipt::search_product_B(long code_) {
-	Pair element = my_base->find(code_);
-	if (element.product == nullptr){ return TRecipline(-1,-1, "", -1); }
-	return TRecipline(0, element.product->code, element.product->name, element.product->cost);
+		int k;
+		file >> k;
+
+
+		pair<TProduct, int> p;
+		for (int i = 0; i < k; i++) {
+			int num_;
+			long code_;
+			string name_;
+			double cost_;
+			file >> num_ >> code_ >> name_ >> cost_;
+			TProduct tmp(code_, name_, cost_);
+			p = make_pair(tmp, num_);
+			my_base.push(p);
+		}
+
+	}
+	catch (Exeption ex) {
+		cout << "Called exeption: " << static_cast<int>(ex) << endl;
+	}
 }
 
-TRecipline TReceipt::search_product_C(long code_) {
-	TRecipline element = products->find(code_);
-	if (element.product == nullptr) { return TRecipline(-1, -1, "", -1); }
-	return element;
-}
 
-void TReceipt::add_product(const TRecipline& obj) {
-	products->insert_end(obj);
-}
-
-void TReceipt::change_Cline(const TRecipline& obj) {
-
-	//products->insert_end(obj); //!Не подходит. Нужна вставка перед или после
-	//Найти номер и вставить перед или после 
-}
+//void TReceipt::change_Cline(const TRecipline& obj) {
+//
+//	//products->insert_end(obj); //!Не подходит. Нужна вставка перед или после
+//	//Найти номер и вставить перед или после 
+//}
