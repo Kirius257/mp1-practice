@@ -1,7 +1,6 @@
 #pragma once
-#ifndef CONTAINER_H
-#define CONTAINER_H
-#include <type_traits>
+#ifndef _CONTAINER_H
+#define _CONTAINER_H
 
 
 #include "TRecipline.h"
@@ -18,13 +17,12 @@ using namespace std;
 //Constants in an enum can be assigned integer values, which can be used in a program to indicate certain states, flags or errors.
 
 
-enum class Exeption { NullPtrFile = -1, IndexLimitError = -2 };
+enum class Exeption { NullPtrFile, IndexLimitError, NotFoundElement };
 template <class T>
 class TContainer {
 	//#SYSTEM FIELDS
 private:
-	int pos;
-	int last_index;
+	int pos0;
 	int count;
 	T* element;
 	int max_size;
@@ -39,12 +37,12 @@ public:
 	//#ITERATOR TOOLS
 	bool is_ended() const;
 	void next();
-	void back();
 	void reset();
 
 	//#OPERATORS CONTAINER
 	T& operator[](int index);
 	const TContainer& operator=(const TContainer<T>& obj);
+	
 	void push(const T& obj);
 	//void insert(int index);
 	//void insert_before(const T& obj);
@@ -52,7 +50,8 @@ public:
 	void remove(int index);
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
-	int  find(const T& elem) const;
+	int find_t(const T& elem) const;//find between their
+	int find_bbbb(const TRecipline& TProduct);
 
 	
 };
@@ -61,11 +60,12 @@ public:
 
 template <class T>
 TContainer<T>::TContainer(int max_size,int step) {
-	pos = 0;
+	pos0 = 0;
 	count = 0;
-	last_index = max_size - 1;
+	this->max_size = max_size;
+	this->step = step;
 
-	element = new T[this->max_size];
+	element = new T[max_size];
 }
 
 
@@ -94,7 +94,7 @@ TContainer<T>::~TContainer() {
 
 template <class T>
 bool TContainer<T>::is_ended()const {
-	if (pos == last_index) {
+	if (pos0 == count) {
 		return true;
 	}
 	else return false;
@@ -104,17 +104,12 @@ bool TContainer<T>::is_ended()const {
 
 template <class T>
 void TContainer<T>::next() {
-	pos++;
-}
-
-template <class T>
-void TContainer<T>::back() {
-	pos--;
+	pos0++;
 }
 
 template <class T>
 void TContainer<T>::reset() {
-	pos = 0;
+	pos0 = 0;
 }
 
 template <class T>
@@ -135,15 +130,9 @@ void TContainer<T>::push(const T& obj) {
 	while (is_ended() == false) {
 		next();
 	}
-	if (element[pos]) {//куда?Вправо или влево?
-		next();
-	}
-	end();
-	//element[pos].num = obj.num;
-	//element[pos].product = new TProduct(*(obj.product));
+
+	element[pos0] = obj;
 	count++;
-	last_index = pos;
-	reset();
 }
 
 
@@ -167,6 +156,8 @@ T& TContainer<T>::operator[](int index) {
 	return element[index];
 }
 
+
+
 template <class T>
 const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 {
@@ -183,11 +174,24 @@ const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 
 
 template <class T>
-int TContainer<T>::find(const T& elem) const {
+int TContainer<T>::find_t(const T& elem) const {
 	int nom = -1;
 	int i = 0;
 	while (i < count && nom == -1) {
 		if (element[i] == elem) nom = i; else i++;
+	}
+	return nom;
+}
+
+template <class T>
+int TContainer<T>::find_bbbb(const TRecipline& TProduct) {
+	int nom = -1;
+	int i = 0;
+	while (i < count && nom == -1) {
+		if (element[i].first == TProduct.product) {
+			nom = i; 
+		}
+		else i++;
 	}
 	return nom;
 }

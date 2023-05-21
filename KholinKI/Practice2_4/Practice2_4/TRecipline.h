@@ -11,7 +11,7 @@ struct TRecipline {
 	TProduct product;
 
 	TRecipline(void);
-	TRecipline(TProduct product_,int num_, long code_, std::string name_, double cost_);
+	TRecipline(int num_,TProduct product_) ;
 	TRecipline(const TRecipline& obj);
 	
 

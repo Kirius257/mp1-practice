@@ -21,3 +21,11 @@ TProduct::TProduct(const TProduct& obj) {
 	cost = obj.cost;
 }
 
+
+bool TProduct::operator==(const TProduct& obj) {
+	if (code == obj.code) {
+		return true;
+	}
+	else return false;
+}
+
