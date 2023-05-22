@@ -3,10 +3,13 @@
 #define TPRODUCT_H
 
 #include <string>
+#include <fstream>
+#include <iostream>
 
-
+using namespace std;
 
 class TProduct {
+	friend ostream& operator<<(ostream& stream, const TProduct& product);
 private:
 	long code;
 	std::string name;
@@ -17,6 +20,8 @@ public:
 	TProduct(const TProduct& obj);
 
 	void set_code(long code_) { code = code_; }
+	double get_cost() { return cost; }
+
 	bool operator==(const TProduct& obj);
 };
 #endif

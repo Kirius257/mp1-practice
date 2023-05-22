@@ -29,3 +29,13 @@ bool TProduct::operator==(const TProduct& obj) {
 	else return false;
 }
 
+ostream& operator<<(ostream& stream, const TProduct& product) {
+	stream << product.code;
+	stream << "	    ";
+	stream << product.name;
+	stream << "		 ";
+	stream << product.cost;
+	stream << "		 ";
+	return stream;
+}
+

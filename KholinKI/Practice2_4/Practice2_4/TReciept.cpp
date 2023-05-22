@@ -36,30 +36,73 @@ void TReceipt::file_reader(const std::string& path) {
 		cout << "Called exeption: " << static_cast<int>(ex) << endl;
 	}
 }
-bool TReceipt::search_base(const TRecipline& TProduct_) {
-	int res = my_base.find_bbbb(TProduct_);
+bool TReceipt::scanner(const TRecipline& TProduct_) {
+	int res = my_base.find_b(TProduct_);
 	if (res == -1) {
 		return false;
 	}
 	else { return true; }
 }
 
-
-void TReceipt::add_product(const TRecipline& TProduct_) {
-	TRecipline tmp = TProduct_;
-	if (search_base(TProduct_)) {
-		int index = my_base.find_bbbb(TProduct_);
-		tmp.product = my_base[index].first;
-		tmp.num = TProduct_.num;
-		products.push(TProduct_);
+bool TReceipt::search_products(const TRecipline& TProduct_) {
+	int res = products.find_t(TProduct_);
+	if (res == -1) {
+		return false;
 	}
-	else { Exeption ex = Exeption::NotFoundElement; throw ex; }
+	else return true;
+}
+
+bool TReceipt::dublicate_protect(const TRecipline& obj) {
+	int ind = products.find_t(obj);
+	if (ind != -1) {
+		cout <<  "The product in question already exists!"  << "\n"
+			 << "If you would like to change the quantity," << "\n"
+		   	 <<       "go to the Change check line"			<< "\n";
+		return true;
+	}
+	else return false;
 }
 
 
 
-//void TReceipt::change_Cline(const TRecipline& obj) {
-//
-//	//products->insert_end(obj); //!Не подходит. Нужна вставка перед или после
-//	//Найти номер и вставить перед или после 
-//}
+void TReceipt::add_product(const TRecipline& TProduct_) {
+	TRecipline tmp = TProduct_;
+	if (scanner(tmp)) {
+		cout << "Product found!" << endl;
+		int index = my_base.find_b(tmp);
+		tmp.product = my_base[index].first;
+		tmp.num = TProduct_.num;
+		tmp.sum = tmp.product.get_cost() * tmp.num;
+		if (!dublicate_protect(tmp)) {
+			products.push(tmp);
+		}
+		else ;;
+	}
+	else { Exeption ex = Exeption::NotFoundElement; throw ex; }
+}
+
+void TReceipt::change_product(const TRecipline& TProduct_) {
+	TRecipline tmp = TProduct_;
+	if (search_products(tmp)) {
+		cout << "Product found!" << endl;
+		int index = products.find_t(tmp);
+		tmp = products[index];
+		tmp.num = TProduct_.num;
+		products.remove(index);
+		products.insert(tmp, index);
+	}
+	else { Exeption ex = Exeption::NotFoundElement; throw ex; }
+}
+
+ostream& operator<<(ostream& stream, const TReceipt& check) {
+	stream << "			CHECK LIST" << endl;
+	stream << "CODE		NAME		COST		QUANTITY		SUMM" << endl;
+	stream << check.products;
+	stream << endl;
+	return stream;
+}
+
+void TReceipt::calculate() {
+	double sum =
+}
+

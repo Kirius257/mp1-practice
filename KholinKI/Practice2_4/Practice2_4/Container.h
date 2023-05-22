@@ -20,6 +20,7 @@ using namespace std;
 enum class Exeption { NullPtrFile, IndexLimitError, NotFoundElement };
 template <class T>
 class TContainer {
+	
 	//#SYSTEM FIELDS
 private:
 	int pos0;
@@ -30,7 +31,7 @@ private:
 	void realloc();
 public:
 	//#CONSTRUCTORS && DESTRUCTOR
-	TContainer(int max_size = 10, int step = 5);
+	TContainer(int max_size = 1, int step = 5);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
 
@@ -44,16 +45,28 @@ public:
 	const TContainer& operator=(const TContainer<T>& obj);
 	
 	void push(const T& obj);
-	//void insert(int index);
+	void insert(const T& obj,int index);
 	//void insert_before(const T& obj);
 	//void insert_after(const T& obj);
 	void remove(int index);
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
 	int find_t(const T& elem) const;//find between their
-	int find_bbbb(const TRecipline& TProduct);
-
+	int find_b(const TRecipline& TProduct);//get index product in base products
 	
+
+	//#GETTERS
+	int get_count() { return count; }
+
+	//#OUTPUT
+	
+	friend ostream& operator<<(ostream& stream, const TContainer<T>& container) {
+		for (int i = 0; i < container.count; i++) {
+			stream << container.element[i];
+			stream << endl;
+		}
+		return stream;
+	}
 };
 
 
@@ -135,14 +148,32 @@ void TContainer<T>::push(const T& obj) {
 	count++;
 }
 
+template <class T>
+void TContainer<T>::insert(const T& obj, int index) {
+	if (index < 0 || index >= count) {
+		Exeption ex = Exeption::IndexLimitError;
+		throw ex;
+	}
+	if (max_size == count) {
+		realloc();
+	}
+	for (int i = count-1; i >= index; i--) {
+		element[i + 1] = element[i];
+	}
+	element[index] = obj;
+}
+
 
 
 template <class T>
 void TContainer<T>::remove(int index)
 {
-	if (index > -1 && index < count)
-		for (int i = index; i < count - 1; i++)
+	if (index > -1 && index < count) {
+		for (int i = index; i < count; i++) {
 			element[i] = element[i + 1];
+		}	
+	}
+	else { Exeption ex = Exeption::IndexLimitError; throw ex; }
 	count--;
 }
 
@@ -173,18 +204,20 @@ const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 }
 
 
+
+
 template <class T>
 int TContainer<T>::find_t(const T& elem) const {
 	int nom = -1;
 	int i = 0;
 	while (i < count && nom == -1) {
-		if (element[i] == elem) nom = i; else i++;
+		if (element[i].product == elem.product) nom = i; else i++;
 	}
 	return nom;
 }
 
 template <class T>
-int TContainer<T>::find_bbbb(const TRecipline& TProduct) {
+int TContainer<T>::find_b(const TRecipline& TProduct) {
 	int nom = -1;
 	int i = 0;
 	while (i < count && nom == -1) {
@@ -195,5 +228,6 @@ int TContainer<T>::find_bbbb(const TRecipline& TProduct) {
 	}
 	return nom;
 }
+
 
 #endif
