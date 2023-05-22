@@ -44,6 +44,7 @@ public:
 	T& operator[](int index);
 	const TContainer& operator=(const TContainer<T>& obj);
 	
+	
 	void push(const T& obj);
 	void insert(const T& obj,int index);
 	//void insert_before(const T& obj);
@@ -59,7 +60,6 @@ public:
 	int get_count() { return count; }
 
 	//#OUTPUT
-	
 	friend ostream& operator<<(ostream& stream, const TContainer<T>& container) {
 		for (int i = 0; i < container.count; i++) {
 			stream << container.element[i];

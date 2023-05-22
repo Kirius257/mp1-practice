@@ -103,6 +103,10 @@ ostream& operator<<(ostream& stream, const TReceipt& check) {
 }
 
 void TReceipt::calculate() {
-	double sum =
+	double sum = 0.0;
+	int count = products.get_count();
+	for (int i = 0; i < count; i++) {
+		products.element[i]
+	}
 }
 
