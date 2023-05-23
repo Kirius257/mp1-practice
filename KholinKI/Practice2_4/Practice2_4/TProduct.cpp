@@ -1,4 +1,5 @@
 #include "TProduct.h"
+#include <iomanip>
 
 TProduct::TProduct(void) {
 	code = 0;
@@ -30,12 +31,9 @@ bool TProduct::operator==(const TProduct& obj) {
 }
 
 ostream& operator<<(ostream& stream, const TProduct& product) {
-	stream << product.code;
-	stream << "	    ";
-	stream << product.name;
-	stream << "		 ";
-	stream << product.cost;
-	stream << "		 ";
+	stream  << setw(20) << product.code
+			<< setw(20) << product.name
+			<< setw(20) << product.cost;
 	return stream;
 }
 

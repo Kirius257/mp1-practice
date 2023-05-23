@@ -47,5 +47,8 @@
     <ClInclude Include="TReceipt.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Exeption.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

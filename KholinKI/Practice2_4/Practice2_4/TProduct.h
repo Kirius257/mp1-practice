@@ -20,6 +20,7 @@ public:
 	TProduct(const TProduct& obj);
 
 	void set_code(long code_) { code = code_; }
+	long get_code() { return code; }
 	double get_cost() { return cost; }
 
 	bool operator==(const TProduct& obj);

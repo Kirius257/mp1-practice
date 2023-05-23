@@ -19,13 +19,14 @@ private:
 	bool scanner(const TRecipline& TProduct_);
 	bool search_products(const TRecipline& TProduct_);
 	bool dublicate_protect(const TRecipline& TProduct_);
+	
 public:
 	TReceipt(void);
 
 	void file_reader(const std::string& path);
 	void add_product(const TRecipline& TProduct_);
 	void change_product(const TRecipline& TProduct_);
-	void calculate();
+	double calculate();
 	
 };
 

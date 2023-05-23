@@ -2,7 +2,7 @@
 #ifndef _CONTAINER_H
 #define _CONTAINER_H
 
-
+#include "Exeption.h"
 #include "TRecipline.h"
 #include <string>
 #include <iostream>
@@ -17,10 +17,9 @@ using namespace std;
 //Constants in an enum can be assigned integer values, which can be used in a program to indicate certain states, flags or errors.
 
 
-enum class Exeption { NullPtrFile, IndexLimitError, NotFoundElement };
+
 template <class T>
 class TContainer {
-	
 	//#SYSTEM FIELDS
 private:
 	int pos0;
@@ -31,7 +30,7 @@ private:
 	void realloc();
 public:
 	//#CONSTRUCTORS && DESTRUCTOR
-	TContainer(int max_size = 1, int step = 5);
+	TContainer(int max_size = 100, int step = 100);
 	TContainer(const TContainer<T>& obj);
 	~TContainer();
 
@@ -41,8 +40,9 @@ public:
 	void reset();
 
 	//#OPERATORS CONTAINER
-	T& operator[](int index);
+	T& operator[](int index) const;
 	const TContainer& operator=(const TContainer<T>& obj);
+	
 	
 	
 	void push(const T& obj);
@@ -53,9 +53,10 @@ public:
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
 	int find_t(const T& elem) const;//find between their
-	int find_b(const TRecipline& TProduct);//get index product in base products
+	int find_b(const TRecipline& TProduct) const;//get index product in base products
+	void replace(const T& TProduct_, int index_);
 	
-
+	
 	//#GETTERS
 	int get_count() { return count; }
 
@@ -151,8 +152,7 @@ void TContainer<T>::push(const T& obj) {
 template <class T>
 void TContainer<T>::insert(const T& obj, int index) {
 	if (index < 0 || index >= count) {
-		Exeption ex = Exeption::IndexLimitError;
-		throw ex;
+		throw Exeption<int>(IndexLimitError,index);
 	}
 	if (max_size == count) {
 		realloc();
@@ -173,16 +173,15 @@ void TContainer<T>::remove(int index)
 			element[i] = element[i + 1];
 		}	
 	}
-	else { Exeption ex = Exeption::IndexLimitError; throw ex; }
+	else { throw Exeption<int>(IndexLimitError, index); }
 	count--;
 }
 
 
 template <class T>
-T& TContainer<T>::operator[](int index) {
+T& TContainer<T>::operator[](int index)const {
 	if (index < 0 || index >= count) {
-		Exeption ex = Exeption::IndexLimitError;
-		throw ex;
+		throw Exeption<int>(IndexLimitError, index);
 	}
 	return element[index];
 }
@@ -217,7 +216,7 @@ int TContainer<T>::find_t(const T& elem) const {
 }
 
 template <class T>
-int TContainer<T>::find_b(const TRecipline& TProduct) {
+int TContainer<T>::find_b(const TRecipline& TProduct) const{
 	int nom = -1;
 	int i = 0;
 	while (i < count && nom == -1) {
@@ -229,5 +228,9 @@ int TContainer<T>::find_b(const TRecipline& TProduct) {
 	return nom;
 }
 
-
+template <class T>
+void TContainer<T>::replace(const T& TProduct_, int index_) {
+	remove(index_);
+	insert(TProduct_, index_);
+}
 #endif

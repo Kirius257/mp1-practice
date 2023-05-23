@@ -1,9 +1,11 @@
 #include "TReceipt.h"
 #include <fstream>
+#include <iomanip>
 
-TReceipt::TReceipt(void){
+
+TReceipt::TReceipt(void) {
 	index = 0;
-	
+
 }
 
 void TReceipt::file_reader(const std::string& path) {
@@ -11,8 +13,7 @@ void TReceipt::file_reader(const std::string& path) {
 	{
 		ifstream file(path);
 		if (file.is_open() == 0) {
-			Exeption ex = Exeption::NullPtrFile;
-			throw ex;
+			throw Exeption<string>(NullPtrFile,path);
 		}
 
 		int k;
@@ -21,19 +22,19 @@ void TReceipt::file_reader(const std::string& path) {
 
 		pair<TProduct, int> p;
 		for (int i = 0; i < k; i++) {
-			
+
 			long code_;
 			string name_;
 			double cost_;
 			int num_;
-			file >>  code_ >> name_ >> cost_ >> num_;
+			file >> code_ >> name_ >> cost_ >> num_;
 			TProduct tmp(code_, name_, cost_);
 			p = make_pair(tmp, num_);
 			my_base.push(p);
 		}
 	}
-	catch (Exeption ex) {
-		cout << "Called exeption: " << static_cast<int>(ex) << endl;
+	catch (const Exeption<string>& ex) {
+		ex.what();
 	}
 }
 bool TReceipt::scanner(const TRecipline& TProduct_) {
@@ -55,9 +56,9 @@ bool TReceipt::search_products(const TRecipline& TProduct_) {
 bool TReceipt::dublicate_protect(const TRecipline& obj) {
 	int ind = products.find_t(obj);
 	if (ind != -1) {
-		cout <<  "The product in question already exists!"  << "\n"
-			 << "If you would like to change the quantity," << "\n"
-		   	 <<       "go to the Change check line"			<< "\n";
+		cout << "The product in question already exists!" << "\n"
+			<< "If you would like to change the quantity," << "\n"
+			<< "go to the Change check line" << "\n";
 		return true;
 	}
 	else return false;
@@ -73,12 +74,13 @@ void TReceipt::add_product(const TRecipline& TProduct_) {
 		tmp.product = my_base[index].first;
 		tmp.num = TProduct_.num;
 		tmp.sum = tmp.product.get_cost() * tmp.num;
+		//контроль количества товаров базы
 		if (!dublicate_protect(tmp)) {
 			products.push(tmp);
 		}
-		else ;;
+		else;;
 	}
-	else { Exeption ex = Exeption::NotFoundElement; throw ex; }
+	else { throw Exeption<long>(NotFoundElement,tmp.product.get_code()); }
 }
 
 void TReceipt::change_product(const TRecipline& TProduct_) {
@@ -88,25 +90,33 @@ void TReceipt::change_product(const TRecipline& TProduct_) {
 		int index = products.find_t(tmp);
 		tmp = products[index];
 		tmp.num = TProduct_.num;
-		products.remove(index);
-		products.insert(tmp, index);
+		tmp.sum = tmp.num * tmp.product.get_cost();//#control cost
+		products.replace(tmp, index);
 	}
-	else { Exeption ex = Exeption::NotFoundElement; throw ex; }
+	else { throw Exeption<long>(NotFoundElement,tmp.product.get_code()); }
 }
 
 ostream& operator<<(ostream& stream, const TReceipt& check) {
-	stream << "			CHECK LIST" << endl;
-	stream << "CODE		NAME		COST		QUANTITY		SUMM" << endl;
+	stream << "				CHECK LIST" << endl;
+	stream  << left << setw(20) << "CODE"
+		    << setw(20) << "NAME"
+			<< setw(20) << "COST"
+			<< setw(20) << "QUANTITY"
+			<< setw(20) << "SUMM";
+	stream << endl;
 	stream << check.products;
 	stream << endl;
 	return stream;
 }
 
-void TReceipt::calculate() {
+double TReceipt::calculate() {
+	TRecipline item;
 	double sum = 0.0;
 	int count = products.get_count();
 	for (int i = 0; i < count; i++) {
-		products.element[i]
+		item = products[i];
+		sum += item.sum;
 	}
+	return sum;
 }
 

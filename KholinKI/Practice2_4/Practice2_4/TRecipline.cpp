@@ -1,5 +1,5 @@
 #include "TRecipline.h"
-
+#include <iomanip>
 
 
 TRecipline::TRecipline(void) {
@@ -32,10 +32,9 @@ bool TRecipline::operator==(const TRecipline& obj) {
 }
 
 ostream& operator<<(ostream& stream, const TRecipline& triple) {
-	stream << triple.product;
-	stream << triple.num;
-	stream << "		";
-	stream << triple.sum;
-	stream << "		";
+	stream << left << triple.product
+		<< setw(20) << triple.num
+		<< setw(20) << triple.sum;
+	stream << endl;
 	return stream;
 }
