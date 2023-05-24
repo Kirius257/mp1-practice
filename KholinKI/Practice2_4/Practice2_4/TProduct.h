@@ -24,5 +24,6 @@ public:
 	double get_cost() { return cost; }
 
 	bool operator==(const TProduct& obj);
+	TProduct& operator=(const TProduct& obj);
 };
 #endif

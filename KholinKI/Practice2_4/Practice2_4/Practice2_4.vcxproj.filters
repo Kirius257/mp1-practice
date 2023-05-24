@@ -27,15 +27,12 @@
     <ClCompile Include="TReciept.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="TM.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Container.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Date.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="TRecipline.h">
@@ -48,6 +45,9 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Exeption.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="TM.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>

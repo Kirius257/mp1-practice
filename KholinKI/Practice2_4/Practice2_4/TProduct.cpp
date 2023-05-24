@@ -23,11 +23,19 @@ TProduct::TProduct(const TProduct& obj) {
 }
 
 
+
 bool TProduct::operator==(const TProduct& obj) {
 	if (code == obj.code) {
 		return true;
 	}
 	else return false;
+}
+
+TProduct& TProduct::operator=(const TProduct& obj) {
+	code = obj.code;
+	name = obj.name;
+	cost = obj.cost;
+	return *this;
 }
 
 ostream& operator<<(ostream& stream, const TProduct& product) {

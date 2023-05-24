@@ -33,8 +33,8 @@ bool TRecipline::operator==(const TRecipline& obj) {
 
 ostream& operator<<(ostream& stream, const TRecipline& triple) {
 	stream << left << triple.product
-		<< setw(20) << triple.num
-		<< setw(20) << triple.sum;
+		   << setw(20) << triple.num
+		   << setw(20) << triple.sum;
 	stream << endl;
 	return stream;
 }

@@ -76,7 +76,8 @@ void TReceipt::add_product(const TRecipline& TProduct_) {
 		tmp.sum = tmp.product.get_cost() * tmp.num;
 		//контроль количества товаров базы
 		if (!dublicate_protect(tmp)) {
-			products.push(tmp);
+			int count = products.get_count();
+			products.SELECT_PUSH(tmp);
 		}
 		else;;
 	}
@@ -96,18 +97,29 @@ void TReceipt::change_product(const TRecipline& TProduct_) {
 	else { throw Exeption<long>(NotFoundElement,tmp.product.get_code()); }
 }
 
-ostream& operator<<(ostream& stream, const TReceipt& check) {
-	stream << "				CHECK LIST" << endl;
-	stream  << left << setw(20) << "CODE"
-		    << setw(20) << "NAME"
-			<< setw(20) << "COST"
-			<< setw(20) << "QUANTITY"
-			<< setw(20) << "SUMM";
-	stream << endl;
-	stream << check.products;
-	stream << endl;
-	return stream;
+void TReceipt::generate() {
+	CLOCK();
+	cout << "				CHECK LIST" << endl;
+	cout << left 
+		 << setw(20)         << "CODE"
+		 << setw(20)         << "NAME"
+		 << setw(20)         << "COST"
+		 << setw(20)         << "QUANTITY"
+		 << setw(20)         << "SUMM";
+	cout << endl;
+	cout << products;
+	cout << endl;
+	double tc = calculate();
+	cout << cout.precision(5) << "The total amount: " << tc << endl; 
+	add_check(products);
 }
+
+void TReceipt::CLOCK() {
+	cout << "CHECK #" << index << endl;
+	DataTime.SYSTEM_C();
+	DataTime.OUTPUT_SYSTEM_C();
+}
+
 
 double TReceipt::calculate() {
 	TRecipline item;
@@ -120,3 +132,7 @@ double TReceipt::calculate() {
 	return sum;
 }
 
+void TReceipt::add_check(const TContainer<TRecipline>& check) {
+	checks.push(check);
+	index++;
+}

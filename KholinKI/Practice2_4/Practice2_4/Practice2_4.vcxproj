@@ -115,7 +115,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TM.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TProduct.cpp" />
     <ClCompile Include="TReciept.cpp" />
@@ -147,9 +148,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Container.h" />
-    <ClInclude Include="Date.h" />
     <ClInclude Include="Exeption.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="TM.h" />
     <ClInclude Include="TProduct.h" />
     <ClInclude Include="TReceipt.h" />
     <ClInclude Include="TRecipline.h" />

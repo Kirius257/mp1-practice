@@ -7,9 +7,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "TM.h"
 
-
-using namespace std;
 
 
 //help: 
@@ -43,12 +42,15 @@ public:
 	T& operator[](int index) const;
 	const TContainer& operator=(const TContainer<T>& obj);
 	
-	
-	
+	//#PUSHERS
+	void push_before(const T& obj);
 	void push(const T& obj);
+	void push_after(const T& obj);
+	
+	//#INSERTS
 	void insert(const T& obj,int index);
-	//void insert_before(const T& obj);
-	//void insert_after(const T& obj);
+
+	//#REMOVING
 	void remove(int index);
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
@@ -68,6 +70,10 @@ public:
 		}
 		return stream;
 	}
+
+	//#SUPPORT
+	void SELECT_PUSH(const T& obj);
+
 };
 
 
@@ -108,7 +114,8 @@ TContainer<T>::~TContainer() {
 
 template <class T>
 bool TContainer<T>::is_ended()const {
-	if (pos0 == count) {
+	if (count == 0)return true;
+	if (pos0 == count-1) {
 		return true;
 	}
 	else return false;
@@ -134,7 +141,21 @@ void TContainer<T>::realloc() {
 	element = tmp_element;
 }
 
-
+template <class T>
+void TContainer<T>::push_before(const T& obj) {
+	if (max_size == count) {
+		realloc();
+	}
+	while (is_ended() == false) {
+		next();
+	}
+	int i = 0;
+	for ( i = pos0+1; i > pos0-1; i--) {
+		element[i] = element[i - 1];
+	}
+	element[i] = obj;
+	count++;
+}
 
 template <class T>
 void TContainer<T>::push(const T& obj) {
@@ -144,7 +165,27 @@ void TContainer<T>::push(const T& obj) {
 	while (is_ended() == false) {
 		next();
 	}
+	int i = 0;
+	if (count != 0) {
+		for (i = pos0 + 1; i > pos0; i--) {
+			element[i] = element[i - 1];
+		}
+	}
 
+	element[i] = obj;
+	count++;
+}
+
+template <class T>
+void TContainer<T>::push_after(const T& obj) {
+	if (max_size == count) {
+		realloc();
+	}
+	while (is_ended() == false) {
+		next();
+	}
+		next();
+	
 	element[pos0] = obj;
 	count++;
 }
@@ -161,7 +202,9 @@ void TContainer<T>::insert(const T& obj, int index) {
 		element[i + 1] = element[i];
 	}
 	element[index] = obj;
+	count++;
 }
+
 
 
 
@@ -191,13 +234,8 @@ T& TContainer<T>::operator[](int index)const {
 template <class T>
 const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 {
-	if (this != &obj) {
-		delete[] element;
-		size = obj.size;
-		count = obj.count;
-		element = new T[size];
-		for (int i = 0; i < count; i++)
-			element[i] = obj.element[i];
+	for (int i = 0; i < obj.count; i++) {
+		element[i] = obj.element[i];
 	}
 	return *this;
 }
@@ -232,5 +270,37 @@ template <class T>
 void TContainer<T>::replace(const T& TProduct_, int index_) {
 	remove(index_);
 	insert(TProduct_, index_);
+}
+
+template <class T>
+void TContainer<T>::SELECT_PUSH(const T& obj) {
+	int choice=-1;
+	if (count == 0) {
+		push(obj);
+	}
+	else if (count == 1) {
+		cout << "which method of addition do you want to use?" << endl;
+		cout << "1. PUSH" << endl
+			 << "2. PUSH AFTER" << endl;
+		cin >> choice;
+		switch (choice) {
+		case 1: {push(obj); break; }
+		case 2: {push_after(obj); break; }
+		default: throw Exeption<int>(ValidPush, choice);
+		}
+	}
+	else if (count >= 2) {
+		cout << "which method of addition do you want to use?" << endl;
+		cout << "1. PUSH" << endl
+			 << "2. PUSH AFTER" << endl
+			 << "3. PUSH BEFORE" << endl;
+		cin >> choice;
+		switch (choice) {
+		case 1: {push(obj); break; }
+		case 2: {push_after(obj); break; }
+		case 3: {push_before(obj); break; }
+		default: throw Exeption<int>(ValidPush, choice);
+		}
+	}
 }
 #endif
