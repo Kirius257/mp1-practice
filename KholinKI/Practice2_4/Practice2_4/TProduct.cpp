@@ -16,6 +16,7 @@ TProduct::TProduct(long code_, std::string name_, double cost_) {
 }
 
 
+
 TProduct::TProduct(const TProduct& obj) {
 	code = obj.code;
 	name = obj.name;
@@ -43,5 +44,11 @@ ostream& operator<<(ostream& stream, const TProduct& product) {
 			<< setw(20) << product.name
 			<< setw(20) << product.cost;
 	return stream;
+}
+
+void TProduct::product_set(long code_, std::string name_, double cost_) {
+	code = code_;
+	name = name_;
+	cost = cost_;
 }
 

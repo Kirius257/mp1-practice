@@ -19,8 +19,10 @@ public:
 	TProduct(long code_, std::string name_, double cost_);
 	TProduct(const TProduct& obj);
 
+	void product_set(long code_, std::string name_, double cost_);
+
 	void set_code(long code_) { code = code_; }
-	long get_code() { return code; }
+	long get_code()const { return code; }
 	double get_cost() { return cost; }
 
 	bool operator==(const TProduct& obj);

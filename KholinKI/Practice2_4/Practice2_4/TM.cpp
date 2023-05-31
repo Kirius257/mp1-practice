@@ -23,6 +23,7 @@ void TM::OUTPUT_SYSTEM_C() {
 	cout << left
 		 << p->tm_hour << ":" << p->tm_min << ":" << p->tm_sec
 		 << endl
-		 << p->tm_mday << "." << p->tm_mon << "." << 1900+p->tm_year;
+		 << p->tm_mday << ".0" << p->tm_mon << "." << 1900+p->tm_year;
 	cout << endl << endl << endl;
 }
+

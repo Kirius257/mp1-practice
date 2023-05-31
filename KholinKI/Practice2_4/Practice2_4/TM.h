@@ -10,6 +10,8 @@ struct TM {
 	TM(void);
 	void SYSTEM_C();
 	void OUTPUT_SYSTEM_C();
+
+	const TM& operator=(const TM& obj);
 };
 
 #endif

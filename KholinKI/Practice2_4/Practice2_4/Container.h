@@ -36,16 +36,18 @@ public:
 	//#ITERATOR TOOLS
 	bool is_ended() const;
 	void next();
+	void back();
 	void reset();
 
 	//#OPERATORS CONTAINER
 	T& operator[](int index) const;
 	const TContainer& operator=(const TContainer<T>& obj);
 	
+	
 	//#PUSHERS
-	void push_before(const T& obj);
-	void push(const T& obj);
-	void push_after(const T& obj);
+//	void push_before(const T& obj);
+	void push_back(const T& obj);
+//	void push_after(const T& obj);
 	
 	//#INSERTS
 	void insert(const T& obj,int index);
@@ -55,12 +57,13 @@ public:
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
 	int find_t(const T& elem) const;//find between their
-	int find_b(const TRecipline& TProduct) const;//get index product in base products
+	
+	//#REPLACEMENT
 	void replace(const T& TProduct_, int index_);
 	
 	
 	//#GETTERS
-	int get_count() { return count; }
+	int get_count()const { return count; }
 
 	//#OUTPUT
 	friend ostream& operator<<(ostream& stream, const TContainer<T>& container) {
@@ -115,7 +118,7 @@ TContainer<T>::~TContainer() {
 template <class T>
 bool TContainer<T>::is_ended()const {
 	if (count == 0)return true;
-	if (pos0 == count-1) {
+	if (pos0 == count) {
 		return true;
 	}
 	else return false;
@@ -126,6 +129,11 @@ bool TContainer<T>::is_ended()const {
 template <class T>
 void TContainer<T>::next() {
 	pos0++;
+}
+
+template <class T>
+void TContainer<T>::back() {
+	pos0--;
 }
 
 template <class T>
@@ -141,58 +149,51 @@ void TContainer<T>::realloc() {
 	element = tmp_element;
 }
 
+//template <class T>
+//void TContainer<T>::push_before(const T& obj) {
+//	if (max_size == count) {
+//		realloc();
+//	}
+//	while (is_ended() == false) {
+//		next();
+//	}
+//	int i = 0;
+//	for ( i = pos0+1; i > pos0-1; i--) {
+//		element[i] = element[i - 1];
+//	}
+//	element[i] = obj;
+//	count++;
+//}
+
 template <class T>
-void TContainer<T>::push_before(const T& obj) {
+void TContainer<T>::push_back(const T& obj) {
 	if (max_size == count) {
 		realloc();
 	}
 	while (is_ended() == false) {
 		next();
 	}
-	int i = 0;
-	for ( i = pos0+1; i > pos0-1; i--) {
-		element[i] = element[i - 1];
-	}
-	element[i] = obj;
-	count++;
-}
-
-template <class T>
-void TContainer<T>::push(const T& obj) {
-	if (max_size == count) {
-		realloc();
-	}
-	while (is_ended() == false) {
-		next();
-	}
-	int i = 0;
-	if (count != 0) {
-		for (i = pos0 + 1; i > pos0; i--) {
-			element[i] = element[i - 1];
-		}
-	}
-
-	element[i] = obj;
-	count++;
-}
-
-template <class T>
-void TContainer<T>::push_after(const T& obj) {
-	if (max_size == count) {
-		realloc();
-	}
-	while (is_ended() == false) {
-		next();
-	}
-		next();
-	
 	element[pos0] = obj;
 	count++;
 }
 
+//template <class T>
+//void TContainer<T>::push_after(const T& obj) {
+//	if (max_size == count) {
+//		realloc();
+//	}
+//	while (is_ended() == false) {
+//		next();
+//	}
+//		next();
+//	
+//	element[pos0] = obj;
+//	count++;
+//}
+
 template <class T>
 void TContainer<T>::insert(const T& obj, int index) {
-	if (index < 0 || index >= count) {
+	if (index < 0 || index > count) {
 		throw Exeption<int>(IndexLimitError,index);
 	}
 	if (max_size == count) {
@@ -231,17 +232,24 @@ T& TContainer<T>::operator[](int index)const {
 
 
 
+
 template <class T>
 const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 {
+	count = obj.count;
 	for (int i = 0; i < obj.count; i++) {
 		element[i] = obj.element[i];
 	}
 	return *this;
 }
 
-
-
+//template <class T>
+//bool TContainer<T>::operator==(const T& obj) {
+//	if (element[i].product.get_code() == obj.product.get_code()) {
+//		return true;
+//	}
+//	else return false;
+//}
 
 template <class T>
 int TContainer<T>::find_t(const T& elem) const {
@@ -253,18 +261,6 @@ int TContainer<T>::find_t(const T& elem) const {
 	return nom;
 }
 
-template <class T>
-int TContainer<T>::find_b(const TRecipline& TProduct) const{
-	int nom = -1;
-	int i = 0;
-	while (i < count && nom == -1) {
-		if (element[i].first == TProduct.product) {
-			nom = i; 
-		}
-		else i++;
-	}
-	return nom;
-}
 
 template <class T>
 void TContainer<T>::replace(const T& TProduct_, int index_) {

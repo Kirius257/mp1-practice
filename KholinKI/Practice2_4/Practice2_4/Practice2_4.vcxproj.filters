@@ -30,6 +30,12 @@
     <ClCompile Include="TM.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Base.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Container.h">
@@ -48,6 +54,12 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="TM.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>

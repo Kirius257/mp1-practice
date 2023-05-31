@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="TM.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TProduct.cpp" />
@@ -147,6 +149,8 @@
     <ClCompile Include="TRecipline.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="Exeption.h" />
     <ClInclude Include="TM.h" />
