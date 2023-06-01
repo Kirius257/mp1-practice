@@ -14,6 +14,7 @@ TRecipline::TRecipline(int num_,TProduct product_) {
 
 TRecipline::TRecipline(const TRecipline& obj) {
 	num = obj.num;
+	sum = obj.sum;
 	product = obj.product;
 }
 
@@ -30,6 +31,8 @@ bool TRecipline::operator==(const TRecipline& obj) {
 		}
 		else return false;
 }
+
+
 
 ostream& operator<<(ostream& stream, const TRecipline& triple) {
 	stream << left << triple.product

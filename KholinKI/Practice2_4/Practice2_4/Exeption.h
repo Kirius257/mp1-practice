@@ -7,7 +7,7 @@ using namespace std;
 
 enum TypeExeption { NullPtrFile, IndexLimitError, NotFoundElement, 
 					NotFoundCheckMethod, NumProductLimit, ValidMode,
-					ValidPush
+					ValidPush,ValidChoice
                   };
 template <class T>
 class Exeption {
@@ -34,6 +34,7 @@ void Exeption<T>::what()const {
 	case NumProductLimit: { cout << "You cannot take more than what is in stock!Take less than " << WrongValue << endl;  break; }
 	case ValidMode: {cout << "When asked about the next customer, you entered an unacceptable answer " << WrongValue << endl; break; }
 	case ValidPush: {cout << "There is no method of adding from the above list with the number " << WrongValue << endl; break; }
+	case ValidChoice: {cout << "You entered wrong choice! " << WrongValue << endl; break; }
 	}
 }
 #endif

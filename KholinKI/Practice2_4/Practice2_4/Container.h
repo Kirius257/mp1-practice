@@ -42,6 +42,7 @@ public:
 	//#OPERATORS CONTAINER
 	T& operator[](int index) const;
 	const TContainer& operator=(const TContainer<T>& obj);
+//	bool operator>(const T& obj);
 	
 	
 	//#PUSHERS
@@ -56,7 +57,9 @@ public:
 	void remove(int index);
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
-	int find_t(const T& elem) const;//find between their
+	int find_t(const T& elem)const;
+	int find_pair(const pair<TProduct,int>& elem)const;
+	
 	
 	//#REPLACEMENT
 	void replace(const T& TProduct_, int index_);
@@ -67,6 +70,7 @@ public:
 
 	//#OUTPUT
 	friend ostream& operator<<(ostream& stream, const TContainer<T>& container) {
+
 		for (int i = 0; i < container.count; i++) {
 			stream << container.element[i];
 			stream << endl;
@@ -87,16 +91,17 @@ TContainer<T>::TContainer(int max_size,int step) {
 	count = 0;
 	this->max_size = max_size;
 	this->step = step;
-
 	element = new T[max_size];
 }
 
 
 template <class T>
 TContainer<T>::TContainer(const TContainer<T>& obj) {
+	pos0 = obj.pos0;
 	max_size = obj.max_size;
 	count = obj.count;
 	element = new T[max_size];
+	step = obj.step;
 	for (int i = 0; i < count; i++){
 		element[i] = obj.element[i];
 	}
@@ -230,7 +235,15 @@ T& TContainer<T>::operator[](int index)const {
 	return element[index];
 }
 
-
+//
+//template <class T>
+//bool TContainer<T>::operator>(const T& obj) {
+//	int index = find_t(obj);
+//	if (obj > element[index]) {
+//		return true;
+//	}
+//	else return false;
+//}
 
 
 template <class T>
@@ -243,14 +256,6 @@ const TContainer<T>& TContainer<T>::operator=(const TContainer<T>& obj)
 	return *this;
 }
 
-//template <class T>
-//bool TContainer<T>::operator==(const T& obj) {
-//	if (element[i].product.get_code() == obj.product.get_code()) {
-//		return true;
-//	}
-//	else return false;
-//}
-
 template <class T>
 int TContainer<T>::find_t(const T& elem) const {
 	int nom = -1;
@@ -260,6 +265,18 @@ int TContainer<T>::find_t(const T& elem) const {
 	}
 	return nom;
 }
+
+
+template <class T>
+int TContainer<T>::find_pair(const pair<TProduct,int>& elem)const {
+	int nom = -1;
+	int i = 0;
+	while (i < count && nom == -1) {
+		if (element[i].first == elem.first) nom = i; else i++;
+	}
+	return nom;
+}
+
 
 
 template <class T>

@@ -50,9 +50,44 @@ int Base::scanner(long code_) const {
 
 
 TProduct& Base::get_product(int index) {
-	if (index < 0 || index > get_count())
+	if (index < 0 || index > my_base.get_count())
 	{
 		throw Exeption<int>(IndexLimitError, index);
 	}
 	return my_base[index].first;
+}
+
+int& Base::get_num(int index)const {
+	if (index < 0 || index > my_base.get_count())
+	{
+		throw Exeption<int>(IndexLimitError, index);
+	}
+	return my_base[index].second;
+}
+
+bool Base::zero_check(const TRecipline& obj) {
+	int index = my_base.find_pair(convert(obj));
+	int num = my_base[index].second;
+	if (num == 0) {
+		return true;
+	}
+	else return false;
+}
+
+bool Base::operator<(const TRecipline& obj) {
+	int index = my_base.find_pair(convert(obj));
+	if (my_base[index].second < obj.num ) {
+		return true;
+	}
+	else return false;
+}
+
+pair<TProduct,int> Base::convert(const TRecipline& obj) {
+	pair<TProduct, int> p = make_pair(obj.product, obj.num);
+	return p;
+}
+
+void Base::control(const TRecipline& obj) {
+	int index = my_base.find_pair(convert(obj));
+	my_base[index].second -=  obj.num;
 }

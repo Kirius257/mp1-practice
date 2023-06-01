@@ -16,7 +16,6 @@ struct TRecipline {
 	
 	TRecipline& operator=(const TRecipline& obj);
 	bool operator==(const TRecipline& obj);
-	
 };
 
 ostream& operator<<(ostream& stream, const TRecipline& triple);

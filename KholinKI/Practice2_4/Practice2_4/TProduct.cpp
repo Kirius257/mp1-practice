@@ -51,4 +51,3 @@ void TProduct::product_set(long code_, std::string name_, double cost_) {
 	name = name_;
 	cost = cost_;
 }
-

@@ -6,6 +6,7 @@
 
 
 class Shop {
+	friend ostream& operator<<(ostream& stream, const Shop& obj);
 private:
 	TContainer<TReceipt> checks;
 	int num_checks;
@@ -13,7 +14,5 @@ public:
 	Shop(void);
 	void add(const TReceipt& check);
 	int get_num() { return num_checks; }
-	void show() { cout << checks << endl; };//перегрузка для чеков
 };
-
 #endif

@@ -7,14 +7,13 @@
 
 
 class TReceipt {
-	
+	friend ostream& operator<<(ostream& stream, const TReceipt& obj);
 private:
 	TM DataTime;
-	TContainer<TRecipline> products;
-	void CLOCK();
-	int search_products(const TRecipline& TProduct_);
-	double calculate();
-	bool dublicate_protect(const TRecipline& TProduct_);
+	TContainer<TRecipline> products;	
+	int search_products(const TRecipline& TProduct_)const;
+	double calculate()const;
+	void CLOCK();//не выводится дата-время
 public:
 
 	void add_product(const TRecipline& TProduct_);
@@ -22,6 +21,6 @@ public:
 	void generate();
 
 	const TReceipt& operator=(const TReceipt& receipt);
+	bool operator==(const TRecipline& obj);
 };
-
 #endif

@@ -5,19 +5,19 @@
 
 
 
+//const objects using const methods
 
-
-int TReceipt::search_products(const TRecipline& TProduct_) {
+int TReceipt::search_products(const TRecipline& TProduct_)const {
 	int ind = products.find_t(TProduct_);
 	return ind;
 }
 
-bool TReceipt::dublicate_protect(const TRecipline& obj) {
+bool TReceipt::operator==(const TRecipline& obj) {
 	int ind = products.find_t(obj);
 	if (ind != -1) {
-		cout << "The product in question already exists!" << "\n"
-			<< "If you would like to change the quantity," << "\n"
-			<< "go to the Change check line" << "\n";
+		TRecipline& tmp = products[ind];
+		tmp.num += obj.num;
+		tmp.sum = tmp.num * tmp.product.get_cost();
 		return true;
 	}
 	else return false;
@@ -26,11 +26,7 @@ bool TReceipt::dublicate_protect(const TRecipline& obj) {
 
 
 void TReceipt::add_product(const TRecipline& TProduct_) {		
-		//контроль количества товаров базы
-		if (!dublicate_protect(TProduct_)) {
-			products.push_back(TProduct_);
-		}
-		else;;
+	products.push_back(TProduct_);
 }
 
 void TReceipt::change_product(const TRecipline& TProduct_) {
@@ -40,7 +36,7 @@ void TReceipt::change_product(const TRecipline& TProduct_) {
 		TRecipline tmp;
 		tmp = products[index];
 		tmp.num = TProduct_.num;
-		tmp.sum = tmp.num * tmp.product.get_cost();//#control cost
+		tmp.sum = tmp.num * tmp.product.get_cost();
 		products.replace(tmp, index);
 	}
 	else { throw Exeption<long>(NotFoundElement, TProduct_.product.get_code()); }
@@ -63,12 +59,12 @@ void TReceipt::generate() {
 }
 
 void TReceipt::CLOCK() {
-	DataTime.SYSTEM_C();
-	DataTime.OUTPUT_SYSTEM_C();
+	DataTime.SET_LOCAL_TIME();
+	DataTime.OUTPUT_CLOCK();
 }
 
 
-double TReceipt::calculate() {
+double TReceipt::calculate()const {
 	TRecipline item;
 	double sum = 0.0;
 	int count = products.get_count();
@@ -79,8 +75,21 @@ double TReceipt::calculate() {
 	return sum;
 }
 
+ostream& operator<<(ostream& stream, const TReceipt& obj) {
+	cout << "				CHECK LIST" << endl;
+	cout << left
+		<< setw(20) << "CODE"
+		<< setw(20) << "NAME"
+		<< setw(20) << "COST"
+		<< setw(20) << "QUANTITY"
+		<< setw(20) << "SUMM";
+	cout << endl;
+	stream << obj.products;
+	return stream;
+}
+
 const TReceipt& TReceipt::operator=(const TReceipt& receipt) {
-	DataTime.SYSTEM_C();
+	DataTime = receipt.DataTime;
 	products = receipt.products;
 	return *this;
 }
