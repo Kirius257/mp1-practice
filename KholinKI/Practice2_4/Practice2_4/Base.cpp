@@ -66,7 +66,7 @@ int& Base::get_num(int index)const {
 }
 
 bool Base::zero_check(const TRecipline& obj) {
-	int index = my_base.find_pair(convert(obj));
+	int index = my_base.find_t(convert(obj));
 	int num = my_base[index].second;
 	if (num == 0) {
 		return true;
@@ -75,7 +75,7 @@ bool Base::zero_check(const TRecipline& obj) {
 }
 
 bool Base::operator<(const TRecipline& obj) {
-	int index = my_base.find_pair(convert(obj));
+	int index = my_base.find_t(convert(obj));
 	if (my_base[index].second < obj.num ) {
 		return true;
 	}
@@ -88,6 +88,6 @@ pair<TProduct,int> Base::convert(const TRecipline& obj) {
 }
 
 void Base::control(const TRecipline& obj) {
-	int index = my_base.find_pair(convert(obj));
+	int index = my_base.find_t(convert(obj));
 	my_base[index].second -=  obj.num;
 }

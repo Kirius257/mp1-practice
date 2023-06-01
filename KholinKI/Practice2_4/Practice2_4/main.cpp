@@ -76,14 +76,11 @@ int main() {
 
 							}while (counter_num == 1);
 							
-							
-								
-								
+
 								buying.product = data.get_product(index);
 								buying.sum = buying.product.get_cost() * buying.num;
 								
-							
-							
+													
 							if (check == buying) {
 								data.control(buying);
 							}
@@ -161,12 +158,11 @@ int main() {
 		}
 		else;;
 	}
-	catch(const Exeption<int> ex){
+	catch(const Exeption<int>& ex){
 		ex.what();
 	}
-	catch (const Exeption<long> ex) {
+	catch (const Exeption<long>& ex) {
 		ex.what();
 	}
-	
 	return 0;
 }

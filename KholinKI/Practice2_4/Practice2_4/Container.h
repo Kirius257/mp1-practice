@@ -58,7 +58,8 @@ public:
 	
 	//#METHODS OF WORKING WITH ELEMENT FIELDS
 	int find_t(const T& elem)const;
-	int find_pair(const pair<TProduct,int>& elem)const;
+	template<class T1> int find_t(const T1& code)const;
+	
 	
 	
 	//#REPLACEMENT
@@ -92,6 +93,7 @@ TContainer<T>::TContainer(int max_size,int step) {
 	this->max_size = max_size;
 	this->step = step;
 	element = new T[max_size];
+
 }
 
 
@@ -150,6 +152,7 @@ template <class T>
 void TContainer<T>::realloc() {
 	max_size += step;
 	T* tmp_element = new T[max_size];
+
 	for (int i = 0; i < count; i++) { tmp_element[i] = element[i]; }
 	element = tmp_element;
 }
@@ -267,15 +270,17 @@ int TContainer<T>::find_t(const T& elem) const {
 }
 
 
-template <class T>
-int TContainer<T>::find_pair(const pair<TProduct,int>& elem)const {
+template<class T,class T1>
+int TContainer<T>::find_t(const T1& code)const {
 	int nom = -1;
 	int i = 0;
 	while (i < count && nom == -1) {
-		if (element[i].first == elem.first) nom = i; else i++;
+		if (element[i].first == code.first) nom = i; else i++;
 	}
 	return nom;
 }
+
+
 
 
 

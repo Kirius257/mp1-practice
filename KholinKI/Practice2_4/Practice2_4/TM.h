@@ -3,6 +3,8 @@
 #define _TM_H
 #include <ctime>
 
+typedef time_t TOKEN;
+
 class TM {
 private:
 	int year;
@@ -11,14 +13,14 @@ private:
 	int hour;
 	int minute;
 	int second;
-	time_t now;
+	TOKEN now;
 public:
 	TM(void);
 	TM(const TM& obj);
 
 	void SET_LOCAL_TIME();
 	void OUTPUT_CLOCK();
-	void SAVE(time_t now_);
+	void SAVE(TOKEN now_);
 
 	const TM& operator=(const TM& obj);
 };

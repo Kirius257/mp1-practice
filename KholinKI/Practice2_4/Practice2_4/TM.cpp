@@ -42,7 +42,7 @@ void TM::OUTPUT_CLOCK() {
 	puts(dt);
 }
 
-void TM::SAVE(time_t now_){
+void TM::SAVE(TOKEN now_){
 	tm* p = localtime(&now_);
 	year = p->tm_year+1900;
 	month = p->tm_mon;

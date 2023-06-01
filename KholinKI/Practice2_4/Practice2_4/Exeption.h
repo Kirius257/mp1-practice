@@ -7,7 +7,7 @@ using namespace std;
 
 enum TypeExeption { NullPtrFile, IndexLimitError, NotFoundElement, 
 					NotFoundCheckMethod, NumProductLimit, ValidMode,
-					ValidPush,ValidChoice
+					ValidPush,ValidChoice,
                   };
 template <class T>
 class Exeption {
@@ -17,11 +17,14 @@ private:
 public:
 	Exeption(TypeExeption type_, T WrongValue_);
 
+
 	void what()const;
 };
 
 template <class T>
 Exeption<T>::Exeption(TypeExeption type_, T WrongValue_):type(type_),WrongValue(WrongValue_){}
+
+
 
 template <class T>
 void Exeption<T>::what()const {
